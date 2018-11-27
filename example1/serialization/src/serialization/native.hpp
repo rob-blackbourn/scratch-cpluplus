@@ -5,6 +5,22 @@
 
 std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
+    unsigned char &value)
+{
+    value = *iter++;
+    return iter;
+}
+
+std::vector<unsigned char>::iterator &operator<<(
+    std::vector<unsigned char>::iterator &iter,
+    unsigned char value)
+{
+    *iter++ = value;
+    return iter;
+}
+
+std::vector<unsigned char>::const_iterator &operator>>(
+    std::vector<unsigned char>::const_iterator &iter,
     int &value)
 {
     value =

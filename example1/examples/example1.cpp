@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <array>
 #include <boost/asio/ip/address.hpp>
 
 #include "serialization/native.hpp"
@@ -40,7 +41,7 @@ void test_string()
 void test_ip_address_v4()
 {
     auto addr1(boost::asio::ip::make_address("127.0.0.1"));
-    std::vector<unsigned char> v(sizeof(unsigned char) + sizeof(unsigned long));
+    std::vector<unsigned char> v(sizeof(size_t) + std::tuple_size<boost::asio::ip::address_v4::bytes_type>());
     std::vector<unsigned char>::iterator viter(v.begin());
 
     viter << addr1;

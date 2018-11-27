@@ -2,17 +2,27 @@
 #define __serialization_boost_ip_address_hpp
 
 #include <vector>
+#include <stdexcept>
 #include <boost/asio/ip/address.hpp>
 
 #include "serialization/native.hpp"
+#include "serialization/array.hpp"
+#include "serialization/vector.hpp"
 
 std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
     boost::asio::ip::address_v4 &value)
 {
-    unsigned long l;
-    iter >> l;
-    value = boost::asio::ip::address_v4(l);
+    std::vector<unsigned char> bytes;
+    iter >> bytes;
+    if (bytes.size() != std::tuple_size<boost::asio::ip::address_v4::bytes_type>())
+        throw std::out_of_range("Invalid size");
+
+    boost::asio::ip::address_v4::bytes_type bytes_v4;
+    std::copy(bytes.begin(), bytes.end(), bytes_v4.begin());
+    boost::asio::ip::address_v4 addr_v4(bytes_v4);
+    value = addr_v4;
+
     return iter;
 }
 
@@ -20,7 +30,7 @@ std::vector<unsigned char>::iterator &operator<<(
     std::vector<unsigned char>::iterator &iter,
     const boost::asio::ip::address_v4 &value)
 {
-    iter << value.to_ulong();
+    iter << value.to_bytes();
     return iter;
 }
 
@@ -28,11 +38,16 @@ std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
     boost::asio::ip::address_v6 &value)
 {
-    boost::asio::ip::address_v6::bytes_type buf;
-    auto start = iter;
-    iter += buf.size();
-    std::copy(start, iter, buf.begin());
-    value = boost::asio::ip::address_v6(buf);
+    std::vector<unsigned char> bytes;
+    iter >> bytes;
+    if (bytes.size() != std::tuple_size<boost::asio::ip::address_v6::bytes_type>())
+        throw std::out_of_range("Invalid size");
+
+    boost::asio::ip::address_v6::bytes_type bytes_v6;
+    std::copy(bytes.begin(), bytes.end(), bytes_v6.begin());
+    boost::asio::ip::address_v6 addr_v6(bytes_v6);
+    value = addr_v6;
+
     return iter;
 }
 
@@ -40,9 +55,7 @@ std::vector<unsigned char>::iterator &operator<<(
     std::vector<unsigned char>::iterator &iter,
     const boost::asio::ip::address_v6 &value)
 {
-    auto buf(value.to_bytes());
-    std::copy(buf.begin(), buf.end(), iter);
-    iter += buf.size();
+    iter << value.to_bytes();
     return iter;
 }
 
@@ -50,20 +63,31 @@ std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
     boost::asio::ip::address &value)
 {
-    size_t b = *iter++;
+    std::vector<unsigned char> bytes;
+    iter >> bytes;
 
-    if (b == 4)
+    if (bytes.size() == std::tuple_size<boost::asio::ip::address_v4::bytes_type>())
     {
-        auto addr(value.to_v4());
-        return iter >> addr;
+        boost::asio::ip::address_v4::bytes_type bytes_v4;
+        std::copy(bytes.begin(), bytes.end(), bytes_v4.begin());
+        boost::asio::ip::address_v4 addr_v4(bytes_v4);
+        boost::asio::ip::address addr(addr_v4);
+        value = addr;
+    }
+    else if (bytes.size() == std::tuple_size<boost::asio::ip::address_v6::bytes_type>())
+    {
+        boost::asio::ip::address_v6::bytes_type bytes_v6;
+        std::copy(bytes.begin(), bytes.end(), bytes_v6.begin());
+        boost::asio::ip::address_v6 addr_v6(bytes_v6);
+        boost::asio::ip::address addr(addr_v6);
         value = addr;
     }
     else
     {
-        auto addr(value.to_v6());
-        return iter >> addr;
-        value = addr;
+        throw std::domain_error("Unknown address type");
     }
+
+    return iter;
 }
 
 std::vector<unsigned char>::iterator &operator<<(
@@ -72,13 +96,11 @@ std::vector<unsigned char>::iterator &operator<<(
 {
     if (value.is_v4())
     {
-        *iter++ = 4;
-        iter << value.to_v4();
+        iter << value.to_v4().to_bytes();
     }
     else
     {
-        *iter++ = 6;
-        iter << value.to_v6();
+        iter << value.to_v6().to_bytes();
     }
 
     return iter;
