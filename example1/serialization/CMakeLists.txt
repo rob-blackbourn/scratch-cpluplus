@@ -8,6 +8,8 @@ add_library(
     "src/serialization/string.cpp"
     "src/serialization/boost/ip/address.hpp"
     "src/serialization/boost/ip/address.cpp"
+    "src/serialization/boost/uuid/uuid.hpp"
+    "src/serialization/boost/uuid/uuid.cpp"
 )
 
 target_include_directories(serialization PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")

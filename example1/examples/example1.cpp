@@ -3,10 +3,14 @@
 #include <string>
 #include <array>
 #include <boost/asio/ip/address.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 #include "serialization/native.hpp"
 #include "serialization/string.hpp"
 #include "serialization/boost/ip/address.hpp"
+#include "serialization/boost/uuid/uuid.hpp"
 
 void test_int()
 {
@@ -53,11 +57,29 @@ void test_ip_address_v4()
     std::cout << "addr1=" << addr1 << ", addr2=" << addr2 << std::endl;
 }
 
+void test_uuid()
+{
+    auto generator = boost::uuids::random_generator();
+    boost::uuids::uuid tag1(generator());
+
+    std::vector<unsigned char> v(sizeof(size_t) + boost::uuids::uuid::static_size());
+    std::vector<unsigned char>::iterator viter(v.begin());
+
+    viter << tag1;
+
+    boost::uuids::uuid tag2;
+    std::vector<unsigned char>::const_iterator vconstiter(v.begin());
+
+    vconstiter >> tag2;
+    std::cout << "tag1=" << tag1 << ", tag2=" << tag2 << std::endl;
+}
+
 int main()
 {
     test_int();
     test_string();
     test_ip_address_v4();
+    test_uuid();
 
     return 0;
 }
