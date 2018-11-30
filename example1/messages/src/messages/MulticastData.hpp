@@ -1,9 +1,10 @@
 #ifndef __messages_MulticastData_hpp
 #define __messages_MulticastData_hpp 1
 
+#include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
+#include <memory>
 
 #include "messages/Message.hpp"
 #include "messages/BinaryDataPacket.hpp"
@@ -28,6 +29,12 @@ namespace jetblack::messagebus::messages
         const bool isImage() const { return _isImage; }
         const std::vector<BinaryDataPacket>& data() const { return _data; }
 
+        static std::shared_ptr<MulticastData> from_bytes(std::vector<unsigned char>::const_iterator& iter);
+
+    protected:
+        virtual size_t bodySize() const;
+        virtual void writeBody(std::vector<unsigned char>::iterator& sink) const;
+
     private:
         std::string _feed;
         std::string _topic;
@@ -36,24 +43,6 @@ namespace jetblack::messagebus::messages
     };
 }
 
-std::vector<unsigned char>::iterator& operator << (
-    std::vector<unsigned char>::iterator& iter,
-    const jetblack::messagebus::messages::MulticastData& value);
-
-std::vector<unsigned char>::const_iterator& operator >> (
-    std::vector<unsigned char>::const_iterator& iter,
-    jetblack::messagebus::messages::MulticastData& value);
-
-size_t serialize_size(const jetblack::messagebus::messages::MulticastData& value);
-
-inline
-std::ostream& operator << (std::ostream& os, const jetblack::messagebus::messages::MulticastData& value)
-{
-    return os
-        << "feed=\"" << value.feed() << "\""
-        << ",topic=\"" << value.topic() << "\""
-        << ",isImage=" << value.isImage() 
-        << ",data.size()=" << value.data().size();
-}
+std::ostream& operator << (std::ostream& os, const jetblack::messagebus::messages::MulticastData& value);
 
 #endif // __messages_MulticastData_hpp

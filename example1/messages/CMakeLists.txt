@@ -9,6 +9,8 @@ add_library(
     "src/messages/Message.cpp"
     "src/messages/AuthorizationRequest.hpp"
     "src/messages/AuthorizationRequest.cpp"
+    "src/messages/AuthorizationResponse.hpp"
+    "src/messages/AuthorizationResponse.cpp"
     "src/messages/MulticastData.hpp"
     "src/messages/MulticastData.cpp"
 )

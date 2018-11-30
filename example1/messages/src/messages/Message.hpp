@@ -2,6 +2,7 @@
 #define __messages_Message_hpp 1
 
 #include <vector>
+#include <memory>
 
 #include "messages/MessageType.hpp"
 
@@ -21,20 +22,19 @@ namespace jetblack::messagebus::messages
 
         MessageType type() const { return _type; }
 
-        // static Message read(std::vector<unsigned char>::const_iterator& source);
-        // static MessageType readHeader(std::vector<unsigned char>::const_iterator& source);
+        static std::shared_ptr<Message> from_bytes(std::vector<unsigned char>::const_iterator& source);
+        std::shared_ptr<std::vector<unsigned char>> to_bytes() const;
+
+    protected:
+        size_t headerSize() const { return sizeof(unsigned char); }
+        static MessageType readHeader(std::vector<unsigned char>::const_iterator& source);
+        std::vector<unsigned char>::iterator& writeHeader(std::vector<unsigned char>::iterator& sink) const;
+        virtual size_t bodySize() const = 0;
+        virtual void writeBody(std::vector<unsigned char>::iterator& sink) const = 0;
 
     private:
         MessageType _type;
     };
 }
-
-std::vector<unsigned char>::iterator& operator << (
-    std::vector<unsigned char>::iterator& iter,
-    const jetblack::messagebus::messages::Message& value);
-
-std::vector<unsigned char>::const_iterator& operator >> (
-    std::vector<unsigned char>::const_iterator& iter,
-    jetblack::messagebus::messages::Message& value);
 
 #endif // __messages_Message_hpp

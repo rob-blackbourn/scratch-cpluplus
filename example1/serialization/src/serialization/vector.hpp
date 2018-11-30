@@ -6,26 +6,33 @@
 
 #include "serialization/native.hpp"
 
+template<typename T>
 inline
 std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
-    std::vector<unsigned char> &value)
+    std::vector<T> &value)
 {
     size_t len;
     iter >> len;
     value.reserve(len);
-    value.assign(iter, iter + len);
+    for (int i = 0; i < len; ++i)
+    {
+        T element;
+        iter >> element;
+        value.push_back(element);
+    }
     return iter;
 }
 
+template<typename T>
 inline
 std::vector<unsigned char>::iterator &operator<<(
     std::vector<unsigned char>::iterator &iter,
-    const std::vector<unsigned char> &value)
+    const std::vector<T> &value)
 {
     iter << value.size();
-    std::copy(value.data(), value.data() + value.size(), iter);
-    iter += value.size();
+    for (auto i = value.begin(); i != value.end(); ++i)
+        iter << *i;
     return iter;
 }
 

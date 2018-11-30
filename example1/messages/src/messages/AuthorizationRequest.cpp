@@ -1,10 +1,10 @@
 #include "messages/AuthorizationRequest.hpp"
 
+#include "serialization/boost/ip/address.hpp"
 #include "serialization/native.hpp"
 #include "serialization/vector.hpp"
 #include "serialization/string.hpp"
 #include "serialization/boost/uuid/uuid.hpp"
-#include "serialization/boost/ip/address.hpp"
 
 #include <boost/uuid/uuid_io.hpp>
 
@@ -19,21 +19,18 @@ size_t serialize_size(const AuthorizationRequest& value)
         serialize_size(value.feed()) + 
         serialize_size(value.topic());
 }
-std::vector<unsigned char>::iterator& operator << (
-    std::vector<unsigned char>::iterator& iter,
-    const AuthorizationRequest& value)
+
+size_t AuthorizationRequest::bodySize() const
 {
-    iter << value.clientId();
-    iter << value.address();
-    iter << value.user();
-    iter << value.feed();
-    iter << value.topic();
-    return iter;    
+    return 
+        serialize_size(_clientId) + 
+        serialize_size(_address) + 
+        serialize_size(_user) + 
+        serialize_size(_feed) + 
+        serialize_size(_topic);
 }
 
-std::vector<unsigned char>::const_iterator& operator >> (
-    std::vector<unsigned char>::const_iterator& iter,
-    AuthorizationRequest& value)
+std::shared_ptr<AuthorizationRequest> AuthorizationRequest::from_bytes(std::vector<unsigned char>::const_iterator& iter)
 {
     boost::uuids::uuid clientId;
     iter >> clientId;
@@ -50,9 +47,16 @@ std::vector<unsigned char>::const_iterator& operator >> (
     std::string topic;
     iter >> topic;
 
-    value = AuthorizationRequest(clientId, address, user, feed, topic);
+    return std::make_shared<AuthorizationRequest>(clientId, address, user, feed, topic);
+}
 
-    return iter;
+void AuthorizationRequest::writeBody(std::vector<unsigned char>::iterator& iter) const
+{
+    iter << _clientId;
+    iter << _address;
+    iter << _user;
+    iter << _feed;
+    iter << _topic;
 }
 
 std::ostream& operator << (std::ostream& os, const AuthorizationRequest& value)

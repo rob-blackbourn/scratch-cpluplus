@@ -6,6 +6,7 @@
 
 using jetblack::messagebus::messages::BinaryDataPacket;
 using jetblack::messagebus::messages::MulticastData;
+using jetblack::messagebus::messages::Message;
 
 size_t serialize_size(const MulticastData& value)
 {
@@ -16,25 +17,7 @@ size_t serialize_size(const MulticastData& value)
         serialize_size(value.data());
 }
 
-std::vector<unsigned char>::iterator& operator << (
-    std::vector<unsigned char>::iterator& iter,
-    const MulticastData& value)
-{
-    iter << value.feed();
-    iter << value.topic();
-    iter << value.isImage();
-    iter << value.data().size();
-    for (auto item = value.data().begin(); item != value.data().end(); ++item)
-    {
-        iter << *item;
-    }
-
-    return iter;    
-}
-
-std::vector<unsigned char>::const_iterator& operator >> (
-    std::vector<unsigned char>::const_iterator& iter,
-    MulticastData& value)
+std::shared_ptr<MulticastData> from_bytes(std::vector<unsigned char>::const_iterator& iter)
 {
     std::string feed;
     iter >> feed;
@@ -45,18 +28,34 @@ std::vector<unsigned char>::const_iterator& operator >> (
     bool isImage;
     iter >> isImage;
 
-    size_t len;
-    iter >> len;
+    std::vector<BinaryDataPacket> data;
+    iter >> data;
 
-    std::vector<BinaryDataPacket> data(len);
-    for (size_t i = 0; i < len; ++i)
-    {
-        BinaryDataPacket item;
-        iter >> item;
-        data.push_back(std::move(item));
-    }
+    return std::make_shared<MulticastData>(MulticastData(feed, topic, isImage, std::move(data)));
+}
 
-    value = MulticastData(feed, topic, isImage, std::move(data));
+void MulticastData::writeBody(std::vector<unsigned char>::iterator& iter) const
+{
+    iter << _feed;
+    iter << _topic;
+    iter << _isImage;
+    iter << _data;
+}
 
-    return iter;
+size_t MulticastData::bodySize() const
+{
+    return 
+        serialize_size(_feed) + 
+        serialize_size(_topic) + 
+        serialize_size(_isImage) +
+        serialize_size(_data);
+}
+
+std::ostream& operator << (std::ostream& os, const MulticastData& value)
+{
+    return os
+        << "feed=\"" << value.feed() << "\""
+        << ",topic=\"" << value.topic() << "\""
+        << ",isImage=" << value.isImage() 
+        << ",data.size()=" << value.data().size();
 }

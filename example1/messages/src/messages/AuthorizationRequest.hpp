@@ -4,9 +4,10 @@
 #include "messages/Message.hpp"
 
 #include <iostream>
-#include <vector>
 #include <string>
-#include <iostream>
+#include <vector>
+#include <memory>
+
 #include <boost/uuid/uuid.hpp>
 #include <boost/asio/ip/address.hpp>
 
@@ -42,6 +43,12 @@ namespace jetblack::messagebus::messages
         const std::string& feed() const { return _feed; }
         const std::string& topic() const { return _topic; }
 
+        static std::shared_ptr<AuthorizationRequest> from_bytes(std::vector<unsigned char>::const_iterator& iter);
+
+    protected:
+        virtual size_t bodySize() const;
+        virtual void writeBody(std::vector<unsigned char>::iterator& sink) const;
+
     private:
         boost::uuids::uuid _clientId;
         boost::asio::ip::address _address;
@@ -50,14 +57,6 @@ namespace jetblack::messagebus::messages
         std::string _topic;
     };
 }
-
-std::vector<unsigned char>::iterator& operator << (
-    std::vector<unsigned char>::iterator& iter,
-    const jetblack::messagebus::messages::AuthorizationRequest& value);
-
-std::vector<unsigned char>::const_iterator& operator >> (
-    std::vector<unsigned char>::const_iterator& iter,
-    jetblack::messagebus::messages::AuthorizationRequest& value);
 
 size_t serialize_size(const jetblack::messagebus::messages::AuthorizationRequest& value);
 

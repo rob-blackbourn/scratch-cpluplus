@@ -9,34 +9,47 @@ using jetblack::messagebus::messages::Message;
 using jetblack::messagebus::messages::MulticastData;
 using jetblack::messagebus::messages::AuthorizationRequest;
 
-std::vector<unsigned char>::const_iterator& operator >> (
-    std::vector<unsigned char>::const_iterator& iter,
-    jetblack::messagebus::messages::Message& value)
+MessageType Message::readHeader(std::vector<unsigned char>::const_iterator& iter)
 {
     unsigned char byte;
     iter >> byte;
-    auto type = static_cast<MessageType>(byte);
+    return static_cast<MessageType>(byte);
+}
 
-    switch (type)
+std::vector<unsigned char>::iterator& Message::writeHeader(std::vector<unsigned char>::iterator& sink) const
+{
+    unsigned char byte = static_cast<unsigned char>(type());
+    sink << byte;
+    return sink;
+}
+
+std::shared_ptr<Message> Message::from_bytes(std::vector<unsigned char>::const_iterator& source)
+{
+    MessageType type = readHeader(source);
+
+        switch (type)
     {
         case MessageType::AuthorizationRequest:
-        {
-            AuthorizationRequest msg;
-            iter >> msg;
-            break;
-        }
+            return AuthorizationRequest::from_bytes(source);
 
         case MessageType::MulticastData:
-        {
-            MulticastData msg;
-            iter >> msg;
-            break;
-        }
+            return MulticastData::from_bytes(source);
 
         default:
-            break;;
+            throw "oh dear";
 
     }
+}
 
-    return iter;
+std::shared_ptr<std::vector<unsigned char>> Message::to_bytes() const
+{
+    size_t size = headerSize() + bodySize();
+    std::shared_ptr<std::vector<unsigned char>> sink = std::make_shared<std::vector<unsigned char>>(size);
+
+    auto iter = sink->begin();
+
+    writeHeader(iter);
+    writeBody(iter);
+
+    return sink;
 }

@@ -9,6 +9,11 @@
 #include "serialization/native.hpp"
 #include "serialization/vector.hpp"
 
+size_t serialize_size(const boost::uuids::uuid &value)
+{
+    return value.size();
+}
+
 std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
     boost::uuids::uuid &value)
