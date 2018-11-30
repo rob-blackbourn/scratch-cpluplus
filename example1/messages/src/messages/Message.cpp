@@ -1,5 +1,6 @@
 #include "messages/Message.hpp"
 #include "messages/AuthorizationRequest.hpp"
+#include "messages/AuthorizationResponse.hpp"
 #include "messages/MulticastData.hpp"
 
 #include "serialization/native.hpp"
@@ -8,6 +9,7 @@ using jetblack::messagebus::messages::MessageType;
 using jetblack::messagebus::messages::Message;
 using jetblack::messagebus::messages::MulticastData;
 using jetblack::messagebus::messages::AuthorizationRequest;
+using jetblack::messagebus::messages::AuthorizationResponse;
 
 MessageType Message::readHeader(std::vector<unsigned char>::const_iterator& iter)
 {
@@ -31,6 +33,9 @@ std::shared_ptr<Message> Message::from_bytes(std::vector<unsigned char>::const_i
     {
         case MessageType::AuthorizationRequest:
             return AuthorizationRequest::from_bytes(source);
+
+        case MessageType::AuthorizationResponse:
+            return AuthorizationResponse::from_bytes(source);
 
         case MessageType::MulticastData:
             return MulticastData::from_bytes(source);
