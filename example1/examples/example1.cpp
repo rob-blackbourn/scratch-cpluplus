@@ -12,6 +12,12 @@
 #include "serialization/boost/ip/address.hpp"
 #include "serialization/boost/uuid/uuid.hpp"
 
+#include "messages/BinaryDataPacket.hpp"
+#include "messages/MulticastData.hpp"
+
+using jetblack::messagebus::messages::BinaryDataPacket;
+using jetblack::messagebus::messages::MulticastData;
+
 void test_int()
 {
     int i = 123456789;
@@ -74,12 +80,49 @@ void test_uuid()
     std::cout << "tag1=" << tag1 << ", tag2=" << tag2 << std::endl;
 }
 
+void test_BinaryDataPacket()
+{
+    auto generator = boost::uuids::random_generator();
+    boost::uuids::uuid header(generator());
+    std::vector<unsigned char> body { 'a', 'b', 'c'};
+
+    jetblack::messagebus::messages::BinaryDataPacket value1(header, std::move(body));
+
+    std::vector<unsigned char> v(value1.size());
+    std::vector<unsigned char>::iterator viter(v.begin());
+
+    viter << value1;
+
+    jetblack::messagebus::messages::BinaryDataPacket value2;
+    std::vector<unsigned char>::const_iterator vconstiter(v.begin());
+
+    vconstiter >> value2;
+    std::cout << "value1=" << value1.header() << ", value2=" << value2.header() << std::endl;
+}
+
+// void test_message()
+// {
+//     jetblack::messagebus::messages::Message msg1(MessageType::MulticastData);
+
+//     std::vector<unsigned char> v(sizeof(size_t) + boost::uuids::uuid::static_size());
+//     std::vector<unsigned char>::iterator viter(v.begin());
+
+//     viter << tag1;
+
+//     boost::uuids::uuid tag2;
+//     std::vector<unsigned char>::const_iterator vconstiter(v.begin());
+
+//     vconstiter >> tag2;
+//     std::cout << "tag1=" << tag1 << ", tag2=" << tag2 << std::endl;
+// }
+
 int main()
 {
     test_int();
     test_string();
     test_ip_address_v4();
     test_uuid();
+    test_BinaryDataPacket();
 
     return 0;
 }

@@ -1,5 +1,5 @@
 #ifndef __serialization_boost_uuid_hpp
-#define __serialization_boost_uuid_hpp
+#define __serialization_boost_uuid_hpp 1
 
 #include <stdexcept>
 #include <vector>
@@ -11,26 +11,15 @@
 
 std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
-    boost::uuids::uuid &value)
-{
-    std::vector<unsigned char> bytes;
-    iter >> bytes;
-    if (bytes.size() != boost::uuids::uuid::static_size())
-        throw std::out_of_range("Invalid size for uuid");
-    
-    std::copy(bytes.begin(), bytes.end(), value.data);
-
-    return iter;
-}
+    boost::uuids::uuid &value);
 
 std::vector<unsigned char>::iterator &operator<<(
     std::vector<unsigned char>::iterator &iter,
-    const boost::uuids::uuid &value)
+    const boost::uuids::uuid &value);
+
+inline size_t serialize_size(const boost::uuids::uuid &value)
 {
-    iter << value.size();
-    std::copy(value.begin(), value.end(), iter);
-    iter += value.size();
-    return iter;
+    return value.size();
 }
 
 #endif // __serialization_boost_uuid_hpp

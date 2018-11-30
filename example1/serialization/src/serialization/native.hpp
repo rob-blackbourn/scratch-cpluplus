@@ -1,8 +1,47 @@
-#ifndef __Serialization_Native_h
-#define __Serialization_Native_h
+#ifndef __serialization_native_hpp
+#define __serialization_native_hpp 1
 
 #include <vector>
 
+/*
+ * bool
+ */
+
+inline
+size_t serialize_size(bool value)
+{
+    return sizeof(unsigned char);
+}
+
+inline
+std::vector<unsigned char>::const_iterator &operator>>(
+    std::vector<unsigned char>::const_iterator &iter,
+    bool &value)
+{
+    value = *iter++ != 0;
+    return iter;
+}
+
+inline
+std::vector<unsigned char>::iterator &operator<<(
+    std::vector<unsigned char>::iterator &iter,
+    bool value)
+{
+    *iter++ = value ? 1 : 0;
+    return iter;
+}
+
+/*
+ * unsigned char
+ */
+
+inline
+size_t serialize_size(unsigned char value)
+{
+    return sizeof(unsigned char);
+}
+
+inline
 std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
     unsigned char &value)
@@ -11,6 +50,7 @@ std::vector<unsigned char>::const_iterator &operator>>(
     return iter;
 }
 
+inline
 std::vector<unsigned char>::iterator &operator<<(
     std::vector<unsigned char>::iterator &iter,
     unsigned char value)
@@ -19,6 +59,17 @@ std::vector<unsigned char>::iterator &operator<<(
     return iter;
 }
 
+/*
+ * int
+ */
+
+inline
+size_t serialize_size(int  value)
+{
+    return sizeof(unsigned char) * 4;
+}
+
+inline
 std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
     int &value)
@@ -31,6 +82,7 @@ std::vector<unsigned char>::const_iterator &operator>>(
     return iter;
 }
 
+inline
 std::vector<unsigned char>::iterator &operator<<(
     std::vector<unsigned char>::iterator &iter,
     int value)
@@ -43,6 +95,17 @@ std::vector<unsigned char>::iterator &operator<<(
     return iter;
 }
 
+/*
+ * size_t
+ */
+
+inline
+size_t serialize_size(size_t  value)
+{
+    return sizeof(unsigned char) * 8;
+}
+
+inline
 std::vector<unsigned char>::const_iterator &operator>>(
     std::vector<unsigned char>::const_iterator &iter,
     size_t &value)
@@ -59,6 +122,7 @@ std::vector<unsigned char>::const_iterator &operator>>(
     return iter;
 }
 
+inline
 std::vector<unsigned char>::iterator &operator<<(
     std::vector<unsigned char>::iterator &iter,
     size_t value)
@@ -75,4 +139,4 @@ std::vector<unsigned char>::iterator &operator<<(
     return iter;
 }
 
-#endif // __Serialization_Native_h
+#endif // __serialization_native_hpp
