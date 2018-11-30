@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 #include "messages/Message.hpp"
 #include "messages/BinaryDataPacket.hpp"
@@ -27,8 +28,6 @@ namespace jetblack::messagebus::messages
         const bool isImage() const { return _isImage; }
         const std::vector<BinaryDataPacket>& data() const { return _data; }
 
-        virtual size_t size() const;
-
     private:
         std::string _feed;
         std::string _topic;
@@ -44,5 +43,17 @@ std::vector<unsigned char>::iterator& operator << (
 std::vector<unsigned char>::const_iterator& operator >> (
     std::vector<unsigned char>::const_iterator& iter,
     jetblack::messagebus::messages::MulticastData& value);
+
+size_t serialize_size(const jetblack::messagebus::messages::MulticastData& value);
+
+inline
+std::ostream& operator << (std::ostream& os, const jetblack::messagebus::messages::MulticastData& value)
+{
+    return os
+        << "feed=\"" << value.feed() << "\""
+        << ",topic=\"" << value.topic() << "\""
+        << ",isImage=" << value.isImage() 
+        << ",data.size()=" << value.data().size();
+}
 
 #endif // __messages_MulticastData_hpp

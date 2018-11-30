@@ -66,18 +66,18 @@ void test_ip_address_v4()
 void test_uuid()
 {
     auto generator = boost::uuids::random_generator();
-    boost::uuids::uuid tag1(generator());
+    boost::uuids::uuid source(generator());
 
-    std::vector<unsigned char> v(sizeof(size_t) + boost::uuids::uuid::static_size());
+    std::vector<unsigned char> v(serialize_size(source));
     std::vector<unsigned char>::iterator viter(v.begin());
 
-    viter << tag1;
+    viter << source;
 
-    boost::uuids::uuid tag2;
+    boost::uuids::uuid destination;
     std::vector<unsigned char>::const_iterator vconstiter(v.begin());
 
-    vconstiter >> tag2;
-    std::cout << "tag1=" << tag1 << ", tag2=" << tag2 << std::endl;
+    vconstiter >> destination;
+    std::cout << "source=" << source << ", destination=" << destination << std::endl;
 }
 
 void test_BinaryDataPacket()
@@ -86,18 +86,18 @@ void test_BinaryDataPacket()
     boost::uuids::uuid header(generator());
     std::vector<unsigned char> body { 'a', 'b', 'c'};
 
-    jetblack::messagebus::messages::BinaryDataPacket value1(header, std::move(body));
+    jetblack::messagebus::messages::BinaryDataPacket source(header, std::move(body));
 
-    std::vector<unsigned char> v(value1.size());
+    std::vector<unsigned char> v(serialize_size(source));
     std::vector<unsigned char>::iterator viter(v.begin());
 
-    viter << value1;
+    viter << source;
 
-    jetblack::messagebus::messages::BinaryDataPacket value2;
+    jetblack::messagebus::messages::BinaryDataPacket destination;
     std::vector<unsigned char>::const_iterator vconstiter(v.begin());
 
-    vconstiter >> value2;
-    std::cout << "value1=" << value1.header() << ", value2=" << value2.header() << std::endl;
+    vconstiter >> destination;
+    std::cout << "source={" << source << "},destination={" << destination << "}" << std::endl;
 }
 
 // void test_message()

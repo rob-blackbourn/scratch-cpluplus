@@ -7,6 +7,8 @@ add_library(
     "src/messages/BinaryDataPacket.cpp"
     "src/messages/Message.hpp"
     "src/messages/Message.cpp"
+    "src/messages/AuthorizationRequest.hpp"
+    "src/messages/AuthorizationRequest.cpp"
     "src/messages/MulticastData.hpp"
     "src/messages/MulticastData.cpp"
 )

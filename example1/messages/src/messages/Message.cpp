@@ -1,34 +1,42 @@
 #include "messages/Message.hpp"
+#include "messages/AuthorizationRequest.hpp"
+#include "messages/MulticastData.hpp"
 
 #include "serialization/native.hpp"
 
-namespace jetblack::messagebus::messages
+using jetblack::messagebus::messages::MessageType;
+using jetblack::messagebus::messages::Message;
+using jetblack::messagebus::messages::MulticastData;
+using jetblack::messagebus::messages::AuthorizationRequest;
+
+std::vector<unsigned char>::const_iterator& operator >> (
+    std::vector<unsigned char>::const_iterator& iter,
+    jetblack::messagebus::messages::Message& value)
 {
-    // Message Message::read(std::vector<unsigned char>::const_iterator& source)
-    // {
-    //     MessageType type = readHeader(source);
-    //     return Message(type);
-    // }
+    unsigned char byte;
+    iter >> byte;
+    auto type = static_cast<MessageType>(byte);
 
-    // MessageType readHeader(std::vector<unsigned char>::const_iterator& source)
-    // {
-    //     unsigned char byte;
-    //     byte >> source;
-    //     return static_cast<MessageType>(byte);
-    // }
-
-    std::vector<unsigned char>::iterator& operator << (
-        std::vector<unsigned char>::iterator& iter, 
-        const Message& message)
+    switch (type)
     {
-        return iter;
-    }
-
-    std::vector<unsigned char>::const_iterator& operator >> (
-        std::vector<unsigned char>::const_iterator& iter,
-        Message& message)
+        case MessageType::AuthorizationRequest:
         {
-            return iter;
+            AuthorizationRequest msg;
+            iter >> msg;
+            break;
         }
 
+        case MessageType::MulticastData:
+        {
+            MulticastData msg;
+            iter >> msg;
+            break;
+        }
+
+        default:
+            break;;
+
+    }
+
+    return iter;
 }

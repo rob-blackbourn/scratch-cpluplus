@@ -1,5 +1,3 @@
-#include <numeric>
-
 #include "messages/MulticastData.hpp"
 
 #include "serialization/native.hpp"
@@ -9,13 +7,13 @@
 using jetblack::messagebus::messages::BinaryDataPacket;
 using jetblack::messagebus::messages::MulticastData;
 
-size_t MulticastData::size() const
+size_t serialize_size(const MulticastData& value)
 {
     return 
-        serialize_size(_feed) + 
-        serialize_size(_topic) + 
-        serialize_size(_isImage) +
-        serialize_size(_data);
+        serialize_size(value.feed()) + 
+        serialize_size(value.topic()) + 
+        serialize_size(value.isImage()) +
+        serialize_size(value.data());
 }
 
 std::vector<unsigned char>::iterator& operator << (

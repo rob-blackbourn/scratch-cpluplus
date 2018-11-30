@@ -4,6 +4,8 @@
 #include "serialization/vector.hpp"
 #include "serialization/boost/uuid/uuid.hpp"
 
+#include <boost/uuid/uuid_io.hpp>
+
 using jetblack::messagebus::messages::BinaryDataPacket;
 
 std::vector<unsigned char>::iterator& operator << (
@@ -37,4 +39,9 @@ size_t serialize_size(const BinaryDataPacket& value)
     return
         serialize_size(value.header()) + 
         serialize_size(b);
+}
+
+std::ostream& operator << (std::ostream& os, const BinaryDataPacket& value)
+{
+    return os << "header=" << value.header() << ",body.size()=" << value.body().size();
 }

@@ -2,6 +2,7 @@
 #define __messages_BinaryDataPacket_hpp 1
 
 #include <vector>
+#include <iostream>
 #include <boost/uuid/uuid.hpp>
 
 namespace jetblack::messagebus::messages
@@ -54,5 +55,9 @@ std::vector<unsigned char>::iterator& operator << (
 std::vector<unsigned char>::const_iterator& operator >> (
     std::vector<unsigned char>::const_iterator& iter,
     jetblack::messagebus::messages::BinaryDataPacket& value);
+
+std::ostream& operator << (
+    std::ostream& os,
+    const jetblack::messagebus::messages::BinaryDataPacket& value);
 
 #endif // __messages_BinaryDataPacket_hpp
