@@ -19,6 +19,10 @@ add_library(
     "src/messages/InteractorAdvertisement.hpp"
     "src/messages/MulticastData.hpp"
     "src/messages/MulticastData.cpp"
+    "src/messages/NotificationRequest.cpp"
+    "src/messages/NotificationRequest.hpp"
+    "src/messages/SubscriptionRequest.cpp"
+    "src/messages/SubscriptionRequest.hpp"
 )
 
 target_include_directories(messages PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")

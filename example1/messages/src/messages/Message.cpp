@@ -5,6 +5,9 @@
 #include "messages/ForwardedSubscriptionRequest.hpp"
 #include "messages/InteractorAdvertisement.hpp"
 #include "messages/MulticastData.hpp"
+#include "messages/NotificationRequest.hpp"
+#include "messages/SubscriptionRequest.hpp"
+#include "messages/UnicastData.hpp"
 
 #include "serialization/native.hpp"
 
@@ -16,6 +19,9 @@ using jetblack::messagebus::messages::AuthorizationResponse;
 using jetblack::messagebus::messages::ForwardedMulticastData;
 using jetblack::messagebus::messages::ForwardedSubscriptionRequest;
 using jetblack::messagebus::messages::InteractorAdvertisement;
+using jetblack::messagebus::messages::NotificationRequest;
+using jetblack::messagebus::messages::SubscriptionRequest;
+using jetblack::messagebus::messages::UnicastData;
 
 MessageType Message::readHeader(std::vector<unsigned char>::const_iterator& iter)
 {
@@ -54,6 +60,15 @@ std::shared_ptr<Message> Message::from_bytes(std::vector<unsigned char>::const_i
 
         case MessageType::MulticastData:
             return MulticastData::from_bytes(source);
+
+        case MessageType::NotificationRequest:
+            return NotificationRequest::from_bytes(source);
+
+        case MessageType::SubscriptionRequest:
+            return SubscriptionRequest::from_bytes(source);
+
+        case MessageType::UnicastData:
+            return UnicastData::from_bytes(source);
 
         default:
             throw "oh dear";
