@@ -1,6 +1,9 @@
 #include "messages/Message.hpp"
 #include "messages/AuthorizationRequest.hpp"
 #include "messages/AuthorizationResponse.hpp"
+#include "messages/ForwardedMulticastData.hpp"
+#include "messages/ForwardedSubscriptionRequest.hpp"
+#include "messages/InteractorAdvertisement.hpp"
 #include "messages/MulticastData.hpp"
 
 #include "serialization/native.hpp"
@@ -10,6 +13,9 @@ using jetblack::messagebus::messages::Message;
 using jetblack::messagebus::messages::MulticastData;
 using jetblack::messagebus::messages::AuthorizationRequest;
 using jetblack::messagebus::messages::AuthorizationResponse;
+using jetblack::messagebus::messages::ForwardedMulticastData;
+using jetblack::messagebus::messages::ForwardedSubscriptionRequest;
+using jetblack::messagebus::messages::InteractorAdvertisement;
 
 MessageType Message::readHeader(std::vector<unsigned char>::const_iterator& iter)
 {
@@ -36,6 +42,15 @@ std::shared_ptr<Message> Message::from_bytes(std::vector<unsigned char>::const_i
 
         case MessageType::AuthorizationResponse:
             return AuthorizationResponse::from_bytes(source);
+
+        case MessageType::ForwardedMulticastData:
+            return ForwardedMulticastData::from_bytes(source);
+
+        case MessageType::ForwardedSubscriptionRequest:
+            return ForwardedSubscriptionRequest::from_bytes(source);
+
+        case MessageType::InteractorAdvertisement:
+            return InteractorAdvertisement::from_bytes(source);
 
         case MessageType::MulticastData:
             return MulticastData::from_bytes(source);

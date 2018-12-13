@@ -11,6 +11,12 @@ add_library(
     "src/messages/AuthorizationRequest.cpp"
     "src/messages/AuthorizationResponse.hpp"
     "src/messages/AuthorizationResponse.cpp"
+    "src/messages/ForwardedMulticastData.hpp"
+    "src/messages/ForwardedMulticastData.cpp"
+    "src/messages/ForwardedSubscriptionRequest.cpp"
+    "src/messages/ForwardedSubscriptionRequest.hpp"
+    "src/messages/InteractorAdvertisement.cpp"
+    "src/messages/InteractorAdvertisement.hpp"
     "src/messages/MulticastData.hpp"
     "src/messages/MulticastData.cpp"
 )
