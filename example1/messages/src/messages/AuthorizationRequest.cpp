@@ -1,10 +1,10 @@
 #include "messages/AuthorizationRequest.hpp"
 
-#include "serialization/boost/ip/address.hpp"
 #include "serialization/native.hpp"
 #include "serialization/vector.hpp"
 #include "serialization/string.hpp"
 #include "serialization/boost/uuid/uuid.hpp"
+#include "serialization/boost/asio/ip/address.hpp"
 
 #include <boost/uuid/uuid_io.hpp>
 

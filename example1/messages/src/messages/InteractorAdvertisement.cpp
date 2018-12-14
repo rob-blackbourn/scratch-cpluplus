@@ -3,7 +3,7 @@
 #include "serialization/native.hpp"
 #include "serialization/vector.hpp"
 #include "serialization/string.hpp"
-#include "serialization/boost/ip/address.hpp"
+#include "serialization/boost/asio/ip/address.hpp"
 
 using jetblack::messagebus::messages::InteractorAdvertisement;
 

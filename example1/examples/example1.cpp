@@ -9,7 +9,7 @@
 
 #include "serialization/native.hpp"
 #include "serialization/string.hpp"
-#include "serialization/boost/ip/address.hpp"
+#include "serialization/boost/asio/ip/address.hpp"
 #include "serialization/boost/uuid/uuid.hpp"
 
 #include "messages/BinaryDataPacket.hpp"

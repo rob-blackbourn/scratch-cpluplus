@@ -10,8 +10,10 @@ add_library(
     "src/serialization/array.cpp"
     "src/serialization/vector.hpp"
     "src/serialization/vector.cpp"
-    "src/serialization/boost/ip/address.hpp"
-    "src/serialization/boost/ip/address.cpp"
+    "src/serialization/boost/asio/buffer.hpp"
+    "src/serialization/boost/asio/buffer.cpp"
+    "src/serialization/boost/asio/ip/address.hpp"
+    "src/serialization/boost/asio/ip/address.cpp"
     "src/serialization/boost/uuid/uuid.hpp"
     "src/serialization/boost/uuid/uuid.cpp"
 )
