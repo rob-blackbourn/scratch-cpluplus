@@ -1,5 +1,3 @@
-#include <array>
-#include <iostream>
 #include <limits>
 #include <string>
 #include <vector>
@@ -7,47 +5,38 @@
 #include "serialization/native.hpp"
 #include "serialization/string.hpp"
 
-bool test_int(int i)
+template<typename T>
+inline
+bool test_value(const T& value)
 {
-    std::vector<char> v(4);
-    std::vector<char>::iterator viter(v.begin());
+    std::vector<char> buf(serialize_size(value));
+    std::vector<char>::iterator viter(buf.begin());
 
-    viter << i;
+    viter << value;
 
-    int j = 0;
-    std::vector<char>::const_iterator vconstiter(v.begin());
+    T roundtrip;
+    std::vector<char>::const_iterator vconstiter(buf.begin());
 
-    vconstiter >> j;
+    vconstiter >> roundtrip;
 
-    return i == j;
-}
-
-void test_string()
-{
-    std::string s1 = "123456789";
-    std::vector<char> v(sizeof(size_t) + s1.size());
-    std::vector<char>::iterator viter(v.begin());
-
-    viter << s1;
-
-    std::string s2;
-    std::vector<char>::const_iterator vconstiter(v.begin());
-
-    vconstiter >> s2;
-    std::cout << "s1=" << s1 << ", s2=" << s2 << std::endl;
+    return value == roundtrip && viter == buf.end() && vconstiter == buf.end();
 }
 
 int main()
 {
     bool ok = true;
 
-    ok = ok && test_int(0);
-    ok = ok && test_int(1);
-    ok = ok && test_int(-1);
-    ok = ok && test_int(std::numeric_limits<int>::min());
-    ok = ok && test_int(std::numeric_limits<int>::max());
+    ok = ok && test_value(0);
+    ok = ok && test_value(1);
+    ok = ok && test_value(-1);
+    ok = ok && test_value(std::numeric_limits<int>::min());
+    ok = ok && test_value(std::numeric_limits<int>::max());
+    ok = ok && test_value(std::numeric_limits<size_t>::min());
+    ok = ok && test_value(std::numeric_limits<size_t>::max());
 
-    test_string();
+    ok = ok && test_value(std::string());
+    ok = ok && test_value(std::string(""));
+    ok = ok && test_value(std::string("This is not a test"));
 
     return ok ? 0 : 1;
 }

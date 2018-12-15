@@ -92,10 +92,10 @@ inline std::vector<char>::const_iterator &operator>>(
     unsigned int &value)
 {
     value =
-        (static_cast<int>(*iter++) << 24) +
-        (static_cast<int>(*iter++) << 16) +
-        (static_cast<int>(*iter++) << 8) +
-        (static_cast<int>(*iter++) << 0);
+        ((static_cast<unsigned long>(static_cast<unsigned char>(*iter++))) << 24) |
+        ((static_cast<unsigned long>(static_cast<unsigned char>(*iter++))) << 16) |
+        ((static_cast<unsigned long>(static_cast<unsigned char>(*iter++))) << 8) |
+        ((static_cast<unsigned long>(static_cast<unsigned char>(*iter++))) << 0);
     return iter;
 }
 
@@ -152,14 +152,14 @@ inline std::vector<char>::const_iterator &operator>>(
     size_t &value)
 {
     value =
-        (static_cast<size_t>(*iter++) << 56) +
-        (static_cast<size_t>(*iter++) << 48) +
-        (static_cast<size_t>(*iter++) << 40) +
-        (static_cast<size_t>(*iter++) << 32) +
-        (static_cast<size_t>(*iter++) << 24) +
-        (static_cast<size_t>(*iter++) << 16) +
-        (static_cast<size_t>(*iter++) << 8) +
-        (static_cast<size_t>(*iter++) << 0);
+        (static_cast<size_t>(static_cast<unsigned char>(*iter++)) << 56) |
+        (static_cast<size_t>(static_cast<unsigned char>(*iter++)) << 48) |
+        (static_cast<size_t>(static_cast<unsigned char>(*iter++)) << 40) |
+        (static_cast<size_t>(static_cast<unsigned char>(*iter++)) << 32) |
+        (static_cast<size_t>(static_cast<unsigned char>(*iter++)) << 24) |
+        (static_cast<size_t>(static_cast<unsigned char>(*iter++)) << 16) |
+        (static_cast<size_t>(static_cast<unsigned char>(*iter++)) << 8) |
+        (static_cast<size_t>(static_cast<unsigned char>(*iter++)) << 0);
     return iter;
 }
 

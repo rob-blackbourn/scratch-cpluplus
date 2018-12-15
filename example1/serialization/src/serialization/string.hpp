@@ -12,8 +12,10 @@ inline std::vector<char>::const_iterator &operator>>(
 {
     size_t len;
     iter >> len;
+    auto begin = iter;
+    iter += len;
     value.reserve(len);
-    value.assign(iter, iter + len);
+    value.assign(begin, iter);
     return iter;
 }
 
