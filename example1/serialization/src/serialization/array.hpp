@@ -7,6 +7,12 @@
 #include "serialization/native.hpp"
 
 template <std::size_t N>
+inline size_t serialize_size(const std::array<unsigned char, N> &value)
+{
+    return N;
+}
+
+template <std::size_t N>
 inline std::vector<char>::const_iterator &operator>>(
     std::vector<char>::const_iterator &iter,
     std::array<unsigned char, N> &value)
