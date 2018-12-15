@@ -3,8 +3,8 @@
 
 #include <algorithm>
 
-std::vector<unsigned char>::const_iterator &operator>>(
-    std::vector<unsigned char>::const_iterator &iter,
+std::vector<char>::const_iterator &operator>>(
+    std::vector<char>::const_iterator &iter,
     boost::asio::mutable_buffer &value)
 {
     size_t len;
@@ -20,8 +20,8 @@ std::vector<unsigned char>::const_iterator &operator>>(
     return iter;
 }
 
-std::vector<unsigned char>::iterator &operator<<(
-    std::vector<unsigned char>::iterator &iter,
+std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
     const boost::asio::mutable_buffer &value)
 {
     iter << value.size();
@@ -40,8 +40,8 @@ size_t serialize_size(const boost::asio::mutable_buffer &value)
     return sizeof(size_t) + value.size();
 }
 
-std::vector<unsigned char>::const_iterator &operator>>(
-    std::vector<unsigned char>::const_iterator &iter,
+std::vector<char>::const_iterator &operator>>(
+    std::vector<char>::const_iterator &iter,
     boost::asio::const_buffer &value)
 {
     size_t len;
@@ -57,8 +57,8 @@ std::vector<unsigned char>::const_iterator &operator>>(
     return iter;
 }
 
-std::vector<unsigned char>::iterator &operator<<(
-    std::vector<unsigned char>::iterator &iter,
+std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
     const boost::asio::const_buffer &value)
 {
     iter << value.size();

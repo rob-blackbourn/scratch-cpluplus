@@ -30,11 +30,11 @@ namespace jetblack::messagebus::messages
         const boost::asio::ip::address& address() const { return _address; }
         bool isJoining() const { return _isJoining; }
         
-        static std::shared_ptr<InteractorAdvertisement> from_bytes(std::vector<unsigned char>::const_iterator& iter);
+        static std::shared_ptr<InteractorAdvertisement> from_bytes(std::vector<char>::const_iterator& iter);
 
     protected:
         virtual size_t bodySize() const;
-        virtual void writeBody(std::vector<unsigned char>::iterator& sink) const;
+        virtual void writeBody(std::vector<char>::iterator& sink) const;
 
     private:
         std::string _user;

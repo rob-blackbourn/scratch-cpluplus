@@ -23,6 +23,8 @@ add_library(
     "src/messages/NotificationRequest.hpp"
     "src/messages/SubscriptionRequest.cpp"
     "src/messages/SubscriptionRequest.hpp"
+    "src/messages/UnicastData.hpp"
+    "src/messages/UnicastData.cpp"
 )
 
 target_include_directories(messages PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")

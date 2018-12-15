@@ -9,28 +9,28 @@
 #include "serialization/array.hpp"
 #include "serialization/vector.hpp"
 
-std::vector<unsigned char>::const_iterator &operator>>(
-    std::vector<unsigned char>::const_iterator &iter,
+std::vector<char>::const_iterator &operator>>(
+    std::vector<char>::const_iterator &iter,
     boost::asio::ip::address_v4 &value);
 
-std::vector<unsigned char>::iterator &operator<<(
-    std::vector<unsigned char>::iterator &iter,
+std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
     const boost::asio::ip::address_v4 &value);
 
-std::vector<unsigned char>::const_iterator &operator>>(
-    std::vector<unsigned char>::const_iterator &iter,
+std::vector<char>::const_iterator &operator>>(
+    std::vector<char>::const_iterator &iter,
     boost::asio::ip::address_v6 &value);
 
-std::vector<unsigned char>::iterator &operator<<(
-    std::vector<unsigned char>::iterator &iter,
+std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
     const boost::asio::ip::address_v6 &value);
 
-std::vector<unsigned char>::const_iterator &operator>>(
-    std::vector<unsigned char>::const_iterator &iter,
+std::vector<char>::const_iterator &operator>>(
+    std::vector<char>::const_iterator &iter,
     boost::asio::ip::address &value);
 
-std::vector<unsigned char>::iterator &operator<<(
-    std::vector<unsigned char>::iterator &iter,
+std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
     const boost::asio::ip::address &value);
 
 size_t serialize_size(const boost::asio::ip::address &value);

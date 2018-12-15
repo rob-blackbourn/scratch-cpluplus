@@ -19,18 +19,18 @@ void ShouldRoundTripSimple()
 {
     auto generator = boost::uuids::random_generator();
     boost::uuids::uuid header(generator());
-    std::vector<unsigned char> body { 'a', 'b', 'c'};
+    std::vector<char> body{'a', 'b', 'c'};
     boost::asio::const_buffer buf(boost::asio::buffer("This is not a test"));
 
     jetblack::messagebus::messages::BinaryDataPacket source(header, std::move(body));
 
-    std::vector<unsigned char> v(serialize_size(source));
-    std::vector<unsigned char>::iterator viter(v.begin());
+    std::vector<char> v(serialize_size(source));
+    std::vector<char>::iterator viter(v.begin());
 
     viter << source;
 
     jetblack::messagebus::messages::BinaryDataPacket destination;
-    std::vector<unsigned char>::const_iterator vconstiter(v.begin());
+    std::vector<char>::const_iterator vconstiter(v.begin());
 
     vconstiter >> destination;
     std::cout << "source={" << source << "},destination={" << destination << "}" << std::endl;

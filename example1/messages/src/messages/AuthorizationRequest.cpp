@@ -10,37 +10,35 @@
 
 using jetblack::messagebus::messages::AuthorizationRequest;
 
-size_t serialize_size(const AuthorizationRequest& value)
+size_t serialize_size(const AuthorizationRequest &value)
 {
-    return 
-        serialize_size(value.clientId()) + 
-        serialize_size(value.address()) + 
-        serialize_size(value.user()) + 
-        serialize_size(value.feed()) + 
-        serialize_size(value.topic());
+    return serialize_size(value.clientId()) +
+           serialize_size(value.address()) +
+           serialize_size(value.user()) +
+           serialize_size(value.feed()) +
+           serialize_size(value.topic());
 }
 
 size_t AuthorizationRequest::bodySize() const
 {
-    return 
-        serialize_size(_clientId) + 
-        serialize_size(_address) + 
-        serialize_size(_user) + 
-        serialize_size(_feed) + 
-        serialize_size(_topic);
+    return serialize_size(_clientId) +
+           serialize_size(_address) +
+           serialize_size(_user) +
+           serialize_size(_feed) +
+           serialize_size(_topic);
 }
 
-std::shared_ptr<AuthorizationRequest> AuthorizationRequest::from_bytes(std::vector<unsigned char>::const_iterator& iter)
+std::shared_ptr<AuthorizationRequest> AuthorizationRequest::from_bytes(std::vector<char>::const_iterator &iter)
 {
     boost::uuids::uuid clientId;
     iter >> clientId;
 
     boost::asio::ip::address address;
     iter >> address;
-    
+
     std::string user;
     iter >> user;
-    
+
     std::string feed;
     iter >> feed;
 
@@ -50,7 +48,7 @@ std::shared_ptr<AuthorizationRequest> AuthorizationRequest::from_bytes(std::vect
     return std::make_shared<AuthorizationRequest>(clientId, address, user, feed, topic);
 }
 
-void AuthorizationRequest::writeBody(std::vector<unsigned char>::iterator& iter) const
+void AuthorizationRequest::writeBody(std::vector<char>::iterator &iter) const
 {
     iter << _clientId;
     iter << _address;
@@ -59,12 +57,12 @@ void AuthorizationRequest::writeBody(std::vector<unsigned char>::iterator& iter)
     iter << _topic;
 }
 
-std::ostream& operator << (std::ostream& os, const AuthorizationRequest& value)
+std::ostream &operator<<(std::ostream &os, const AuthorizationRequest &value)
 {
     return os
-        << "clientId=" << value.clientId()
-        << ",adddress=" << value.address()
-        << ",user=\"" << value.user() << "\""
-        << ",feed=\"" << value.feed() << "\""
-        << ",topic\"" << value.topic() << "\"";
+           << "clientId=" << value.clientId()
+           << ",adddress=" << value.address()
+           << ",user=\"" << value.user() << "\""
+           << ",feed=\"" << value.feed() << "\""
+           << ",topic\"" << value.topic() << "\"";
 }

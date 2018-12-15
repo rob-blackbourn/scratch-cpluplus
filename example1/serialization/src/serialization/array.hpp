@@ -6,10 +6,9 @@
 
 #include "serialization/native.hpp"
 
-template<std::size_t N>
-inline
-std::vector<unsigned char>::const_iterator &operator>>(
-    std::vector<unsigned char>::const_iterator &iter,
+template <std::size_t N>
+inline std::vector<char>::const_iterator &operator>>(
+    std::vector<char>::const_iterator &iter,
     std::array<unsigned char, N> &value)
 {
     auto start = iter;
@@ -18,16 +17,14 @@ std::vector<unsigned char>::const_iterator &operator>>(
     return iter;
 }
 
-template<std::size_t N>
-inline
-std::vector<unsigned char>::iterator &operator<<(
-    std::vector<unsigned char>::iterator &iter,
+template <std::size_t N>
+inline std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
     const std::array<unsigned char, N> &value)
 {
     std::copy(value.begin(), value.end(), iter);
     iter += N;
     return iter;
 }
-
 
 #endif // __serialization_array_hpp

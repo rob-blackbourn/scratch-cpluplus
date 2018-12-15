@@ -6,9 +6,8 @@
 
 #include "serialization/native.hpp"
 
-inline
-std::vector<unsigned char>::const_iterator &operator>>(
-    std::vector<unsigned char>::const_iterator &iter,
+inline std::vector<char>::const_iterator &operator>>(
+    std::vector<char>::const_iterator &iter,
     std::string &value)
 {
     size_t len;
@@ -18,9 +17,8 @@ std::vector<unsigned char>::const_iterator &operator>>(
     return iter;
 }
 
-inline
-std::vector<unsigned char>::iterator &operator<<(
-    std::vector<unsigned char>::iterator &iter,
+inline std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
     const std::string &value)
 {
     iter << value.size();
@@ -29,6 +27,6 @@ std::vector<unsigned char>::iterator &operator<<(
     return iter;
 }
 
-size_t serialize_size(const std::string& value);
+size_t serialize_size(const std::string &value);
 
 #endif // __serialization_string_hpp

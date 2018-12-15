@@ -15,7 +15,7 @@ namespace jetblack::messagebus::messages
         {
         }
 
-        BinaryDataPacket(const boost::uuids::uuid& header, const std::vector<unsigned char>& body)
+        BinaryDataPacket(const boost::uuids::uuid& header, const std::vector<char>& body)
             : _header(header), _body(body)
         {
         }
@@ -38,22 +38,22 @@ namespace jetblack::messagebus::messages
         }
 
         const boost::uuids::uuid& header() const { return _header; }
-        const std::vector<unsigned char>& body() const { return _body; }
+        const std::vector<char>& body() const { return _body; }
 
     private:
         boost::uuids::uuid _header;
-        std::vector<unsigned char> _body;
+        std::vector<char> _body;
     };
 }
 
 size_t serialize_size(const jetblack::messagebus::messages::BinaryDataPacket& value);
 
-std::vector<unsigned char>::iterator& operator << (
-    std::vector<unsigned char>::iterator& iter,
+std::vector<char>::iterator& operator << (
+    std::vector<char>::iterator& iter,
     const jetblack::messagebus::messages::BinaryDataPacket& value);
 
-std::vector<unsigned char>::const_iterator& operator >> (
-    std::vector<unsigned char>::const_iterator& iter,
+std::vector<char>::const_iterator& operator >> (
+    std::vector<char>::const_iterator& iter,
     jetblack::messagebus::messages::BinaryDataPacket& value);
 
 std::ostream& operator << (

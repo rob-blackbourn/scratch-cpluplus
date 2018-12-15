@@ -10,18 +10,18 @@
 void ShouldRoundTrip()
 {
     std::string s0{"This is not a test"};
-    boost::asio::mutable_buffer source(const_cast<char*>(s0.data()), s0.size());
+    boost::asio::mutable_buffer source(const_cast<char *>(s0.data()), s0.size());
 
-    std::vector<unsigned char> v(serialize_size(source));
-    std::vector<unsigned char>::iterator viter(v.begin());
+    std::vector<char> v(serialize_size(source));
+    std::vector<char>::iterator viter(v.begin());
 
     viter << source;
 
     boost::asio::mutable_buffer destination;
-    std::vector<unsigned char>::const_iterator vconstiter(v.begin());
+    std::vector<char>::const_iterator vconstiter(v.begin());
 
     vconstiter >> destination;
-    std::string s1(static_cast<const char*>(destination.data()), destination.size());
+    std::string s1(static_cast<const char *>(destination.data()), destination.size());
     std::cout << "source={" << s0 << "},destination={" << s1 << "}" << std::endl;
 }
 
@@ -29,16 +29,16 @@ void ShouldRoundTripConst()
 {
     boost::asio::const_buffer source(boost::asio::buffer("This is not a test"));
 
-    std::vector<unsigned char> v(serialize_size(source));
-    std::vector<unsigned char>::iterator viter(v.begin());
+    std::vector<char> v(serialize_size(source));
+    std::vector<char>::iterator viter(v.begin());
 
     viter << source;
 
     boost::asio::const_buffer destination;
-    std::vector<unsigned char>::const_iterator vconstiter(v.begin());
+    std::vector<char>::const_iterator vconstiter(v.begin());
 
     vconstiter >> destination;
-    std::cout << "source={" << static_cast<const unsigned char*>(source.data()) << "},destination={" << static_cast<const unsigned char*>(destination.data()) << "}" << std::endl;
+    std::cout << "source={" << static_cast<const unsigned char *>(source.data()) << "},destination={" << static_cast<const unsigned char *>(destination.data()) << "}" << std::endl;
 }
 
 int main()

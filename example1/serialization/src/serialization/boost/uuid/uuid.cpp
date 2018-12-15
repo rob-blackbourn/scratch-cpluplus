@@ -14,8 +14,8 @@ size_t serialize_size(const boost::uuids::uuid &value)
     return value.size();
 }
 
-std::vector<unsigned char>::const_iterator &operator>>(
-    std::vector<unsigned char>::const_iterator &iter,
+std::vector<char>::const_iterator &operator>>(
+    std::vector<char>::const_iterator &iter,
     boost::uuids::uuid &value)
 {
     std::array<uint8_t, sizeof(value.data)> bytes;
@@ -25,8 +25,8 @@ std::vector<unsigned char>::const_iterator &operator>>(
     return iter;
 }
 
-std::vector<unsigned char>::iterator &operator<<(
-    std::vector<unsigned char>::iterator &iter,
+std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
     const boost::uuids::uuid &value)
 {
     size_t len = sizeof(value.data);

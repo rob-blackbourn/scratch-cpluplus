@@ -33,11 +33,11 @@ namespace jetblack::messagebus::messages
         const bool isImage() const { return _isImage; }
         const std::vector<BinaryDataPacket>& data() const { return _data; }
 
-        static std::shared_ptr<UnicastData> from_bytes(std::vector<unsigned char>::const_iterator& iter);
+        static std::shared_ptr<UnicastData> from_bytes(std::vector<char>::const_iterator& iter);
 
     protected:
         virtual size_t bodySize() const;
-        virtual void writeBody(std::vector<unsigned char>::iterator& sink) const;
+        virtual void writeBody(std::vector<char>::iterator& sink) const;
 
     private:
         boost::uuids::uuid _clientId;

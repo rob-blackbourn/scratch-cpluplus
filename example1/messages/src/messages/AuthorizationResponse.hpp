@@ -12,48 +12,47 @@
 
 namespace jetblack::messagebus::messages
 {
-    class AuthorizationResponse : public Message
+class AuthorizationResponse : public Message
+{
+  public:
+    AuthorizationResponse()
+        : Message(MessageType::AuthorizationResponse)
     {
-    public:
-        AuthorizationResponse()
-            : Message(MessageType::AuthorizationResponse)
-        {
-        }
+    }
 
-        AuthorizationResponse(
-            const boost::uuids::uuid& clientId,
-            const std::string& feed,
-            const std::string& topic,
-            bool isAuthorizationRequired,
-            const std::vector<boost::uuids::uuid>& entitlements
-        ) : Message(MessageType::AuthorizationResponse),
-          _clientId(clientId),
-          _feed(feed),
-          _topic(topic),
-          _isAuthorizationRequired(isAuthorizationRequired),
-          _entitlements(entitlements)
-        {
-        }
+    AuthorizationResponse(
+        const boost::uuids::uuid &clientId,
+        const std::string &feed,
+        const std::string &topic,
+        bool isAuthorizationRequired,
+        const std::vector<boost::uuids::uuid> &entitlements) : Message(MessageType::AuthorizationResponse),
+                                                               _clientId(clientId),
+                                                               _feed(feed),
+                                                               _topic(topic),
+                                                               _isAuthorizationRequired(isAuthorizationRequired),
+                                                               _entitlements(entitlements)
+    {
+    }
 
-        const boost::uuids::uuid& clientId() const { return _clientId; }
-        const std::string& feed() const { return _feed; }
-        const std::string& topic() const { return _topic; }
-        bool isAuthorizationRequired() const { return _isAuthorizationRequired; }
-        const std::vector<boost::uuids::uuid>& entitlements() const { return _entitlements; }
+    const boost::uuids::uuid &clientId() const { return _clientId; }
+    const std::string &feed() const { return _feed; }
+    const std::string &topic() const { return _topic; }
+    bool isAuthorizationRequired() const { return _isAuthorizationRequired; }
+    const std::vector<boost::uuids::uuid> &entitlements() const { return _entitlements; }
 
-        static std::shared_ptr<AuthorizationResponse> from_bytes(std::vector<unsigned char>::const_iterator& iter);
+    static std::shared_ptr<AuthorizationResponse> from_bytes(std::vector<char>::const_iterator &iter);
 
-    protected:
-        virtual size_t bodySize() const;
-        virtual void writeBody(std::vector<unsigned char>::iterator& sink) const;
+  protected:
+    virtual size_t bodySize() const;
+    virtual void writeBody(std::vector<char>::iterator &sink) const;
 
-    private:
-        boost::uuids::uuid _clientId;
-        std::string _feed;
-        std::string _topic;
-        bool _isAuthorizationRequired;
-        std::vector<boost::uuids::uuid> _entitlements;
-    };
-}
+  private:
+    boost::uuids::uuid _clientId;
+    std::string _feed;
+    std::string _topic;
+    bool _isAuthorizationRequired;
+    std::vector<boost::uuids::uuid> _entitlements;
+};
+} // namespace jetblack::messagebus::messages
 
 #endif // __messages_AuthorizationResponse_hpp

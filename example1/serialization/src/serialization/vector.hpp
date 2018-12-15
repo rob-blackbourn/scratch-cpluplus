@@ -6,10 +6,9 @@
 
 #include "serialization/native.hpp"
 
-template<typename T>
-inline
-std::vector<unsigned char>::const_iterator &operator>>(
-    std::vector<unsigned char>::const_iterator &iter,
+template <typename T>
+inline std::vector<char>::const_iterator &operator>>(
+    std::vector<char>::const_iterator &iter,
     std::vector<T> &value)
 {
     size_t len;
@@ -24,10 +23,9 @@ std::vector<unsigned char>::const_iterator &operator>>(
     return iter;
 }
 
-template<typename T>
-inline
-std::vector<unsigned char>::iterator &operator<<(
-    std::vector<unsigned char>::iterator &iter,
+template <typename T>
+inline std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
     const std::vector<T> &value)
 {
     iter << value.size();
@@ -36,16 +34,15 @@ std::vector<unsigned char>::iterator &operator<<(
     return iter;
 }
 
-template<typename T>
-inline
-size_t serialize_size(std::vector<T> const& value)
+template <typename T>
+inline size_t serialize_size(std::vector<T> const &value)
 {
-    return sizeof(size_t) + 
-        std::accumulate(
-            value.begin(),
-            value.end(),
-            static_cast<size_t>(0),
-            [&](auto total, auto& element) { return total + serialize_size(element); });
+    return sizeof(size_t) +
+           std::accumulate(
+               value.begin(),
+               value.end(),
+               static_cast<size_t>(0),
+               [&](auto total, auto &element) { return total + serialize_size(element); });
 }
 
 #endif // __serializatiion_vector_hpp

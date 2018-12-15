@@ -11,15 +11,14 @@ using jetblack::messagebus::messages::AuthorizationResponse;
 
 size_t AuthorizationResponse::bodySize() const
 {
-    return 
-        serialize_size(_clientId) + 
-        serialize_size(_feed) + 
-        serialize_size(_topic) +
-        serialize_size(_isAuthorizationRequired) +
-        serialize_size(_entitlements);
+    return serialize_size(_clientId) +
+           serialize_size(_feed) +
+           serialize_size(_topic) +
+           serialize_size(_isAuthorizationRequired) +
+           serialize_size(_entitlements);
 }
 
-std::shared_ptr<AuthorizationResponse> AuthorizationResponse::from_bytes(std::vector<unsigned char>::const_iterator& iter)
+std::shared_ptr<AuthorizationResponse> AuthorizationResponse::from_bytes(std::vector<char>::const_iterator &iter)
 {
     boost::uuids::uuid clientId;
     iter >> clientId;
@@ -39,7 +38,7 @@ std::shared_ptr<AuthorizationResponse> AuthorizationResponse::from_bytes(std::ve
     return std::make_shared<AuthorizationResponse>(clientId, feed, topic, isAuthorizationRequired, entitlements);
 }
 
-void AuthorizationResponse::writeBody(std::vector<unsigned char>::iterator& iter) const
+void AuthorizationResponse::writeBody(std::vector<char>::iterator &iter) const
 {
     iter << _clientId;
     iter << _feed;
@@ -48,12 +47,12 @@ void AuthorizationResponse::writeBody(std::vector<unsigned char>::iterator& iter
     iter << _entitlements;
 }
 
-std::ostream& operator << (std::ostream& os, const AuthorizationResponse& value)
+std::ostream &operator<<(std::ostream &os, const AuthorizationResponse &value)
 {
     return os
-        << "clientId=" << value.clientId()
-        << ",feed=\"" << value.feed() << "\""
-        << ",topic\"" << value.topic() << "\""
-        << ",isAuthorizationRequired=" << value.isAuthorizationRequired()
-        << ",entitlements.size()=" << value.entitlements().size();
+           << "clientId=" << value.clientId()
+           << ",feed=\"" << value.feed() << "\""
+           << ",topic\"" << value.topic() << "\""
+           << ",isAuthorizationRequired=" << value.isAuthorizationRequired()
+           << ",entitlements.size()=" << value.entitlements().size();
 }

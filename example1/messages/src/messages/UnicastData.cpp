@@ -8,20 +8,19 @@
 #include <boost/uuid/uuid_io.hpp>
 
 using jetblack::messagebus::messages::BinaryDataPacket;
-using jetblack::messagebus::messages::UnicastData;
 using jetblack::messagebus::messages::Message;
+using jetblack::messagebus::messages::UnicastData;
 
-size_t serialize_size(const UnicastData& value)
+size_t serialize_size(const UnicastData &value)
 {
-    return 
-        serialize_size(value.clientId()) + 
-        serialize_size(value.feed()) + 
-        serialize_size(value.topic()) + 
-        serialize_size(value.isImage()) +
-        serialize_size(value.data());
+    return serialize_size(value.clientId()) +
+           serialize_size(value.feed()) +
+           serialize_size(value.topic()) +
+           serialize_size(value.isImage()) +
+           serialize_size(value.data());
 }
 
-std::shared_ptr<UnicastData> from_bytes(std::vector<unsigned char>::const_iterator& iter)
+std::shared_ptr<UnicastData> from_bytes(std::vector<char>::const_iterator &iter)
 {
     boost::uuids::uuid clientId;
     iter >> clientId;
@@ -41,7 +40,7 @@ std::shared_ptr<UnicastData> from_bytes(std::vector<unsigned char>::const_iterat
     return std::make_shared<UnicastData>(UnicastData(clientId, feed, topic, isImage, std::move(data)));
 }
 
-void UnicastData::writeBody(std::vector<unsigned char>::iterator& iter) const
+void UnicastData::writeBody(std::vector<char>::iterator &iter) const
 {
     iter << _clientId;
     iter << _feed;
@@ -52,20 +51,19 @@ void UnicastData::writeBody(std::vector<unsigned char>::iterator& iter) const
 
 size_t UnicastData::bodySize() const
 {
-    return 
-        serialize_size(_clientId) + 
-        serialize_size(_feed) + 
-        serialize_size(_topic) + 
-        serialize_size(_isImage) +
-        serialize_size(_data);
+    return serialize_size(_clientId) +
+           serialize_size(_feed) +
+           serialize_size(_topic) +
+           serialize_size(_isImage) +
+           serialize_size(_data);
 }
 
-std::ostream& operator << (std::ostream& os, const UnicastData& value)
+std::ostream &operator<<(std::ostream &os, const UnicastData &value)
 {
     return os
-        << "clientId=\"" << value.clientId() << "\""
-        << ", feed=\"" << value.feed() << "\""
-        << ",topic=\"" << value.topic() << "\""
-        << ",isImage=" << value.isImage() 
-        << ",data.size()=" << value.data().size();
+           << "clientId=\"" << value.clientId() << "\""
+           << ", feed=\"" << value.feed() << "\""
+           << ",topic=\"" << value.topic() << "\""
+           << ",isImage=" << value.isImage()
+           << ",data.size()=" << value.data().size();
 }

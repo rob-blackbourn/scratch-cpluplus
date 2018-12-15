@@ -13,45 +13,45 @@
 
 namespace jetblack::messagebus::messages
 {
-    class ForwardedMulticastData : public Message
+class ForwardedMulticastData : public Message
+{
+  public:
+    ForwardedMulticastData()
+        : Message(MessageType::ForwardedMulticastData)
     {
-    public:
-        ForwardedMulticastData()
-            : Message(MessageType::ForwardedMulticastData)
-        {
-        }
+    }
 
-        ForwardedMulticastData(const std::string& user, const boost::asio::ip::address& address, const std::string& feed, const std::string& topic, bool isImage, const std::vector<BinaryDataPacket>& data)
-            : Message(MessageType::ForwardedMulticastData),
-              _user(user), _feed(feed), _topic(topic), _isImage(isImage), _data(data)
-        {
-        }
+    ForwardedMulticastData(const std::string &user, const boost::asio::ip::address &address, const std::string &feed, const std::string &topic, bool isImage, const std::vector<BinaryDataPacket> &data)
+        : Message(MessageType::ForwardedMulticastData),
+          _user(user), _feed(feed), _topic(topic), _isImage(isImage), _data(data)
+    {
+    }
 
-        const std::string& user() const { return _user; }
-        const boost::asio::ip::address& address() const { return _address; }
-        const std::string& feed() const { return _feed; }
-        const std::string& topic() const { return _topic; }
-        bool isImage() const { return _isImage; }
-        const std::vector<BinaryDataPacket> data() const { return _data; }
-        
-        static std::shared_ptr<ForwardedMulticastData> from_bytes(std::vector<unsigned char>::const_iterator& iter);
+    const std::string &user() const { return _user; }
+    const boost::asio::ip::address &address() const { return _address; }
+    const std::string &feed() const { return _feed; }
+    const std::string &topic() const { return _topic; }
+    bool isImage() const { return _isImage; }
+    const std::vector<BinaryDataPacket> data() const { return _data; }
 
-    protected:
-        virtual size_t bodySize() const;
-        virtual void writeBody(std::vector<unsigned char>::iterator& sink) const;
+    static std::shared_ptr<ForwardedMulticastData> from_bytes(std::vector<char>::const_iterator &iter);
 
-    private:
-        std::string _user;
-        boost::asio::ip::address _address;
-        std::string _feed;
-        std::string _topic;
-        bool _isImage;
-        std::vector<BinaryDataPacket> _data;
-    };
-}
+  protected:
+    virtual size_t bodySize() const;
+    virtual void writeBody(std::vector<char>::iterator &sink) const;
 
-size_t serialize_size(const jetblack::messagebus::messages::ForwardedMulticastData& value);
+  private:
+    std::string _user;
+    boost::asio::ip::address _address;
+    std::string _feed;
+    std::string _topic;
+    bool _isImage;
+    std::vector<BinaryDataPacket> _data;
+};
+} // namespace jetblack::messagebus::messages
 
-std::ostream& operator << (std::ostream& os, const jetblack::messagebus::messages::ForwardedMulticastData& value);
+size_t serialize_size(const jetblack::messagebus::messages::ForwardedMulticastData &value);
+
+std::ostream &operator<<(std::ostream &os, const jetblack::messagebus::messages::ForwardedMulticastData &value);
 
 #endif // __messages_ForwardedMulticastData_hpp

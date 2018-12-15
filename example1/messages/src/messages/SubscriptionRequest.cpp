@@ -23,7 +23,7 @@ size_t SubscriptionRequest::bodySize() const
         serialize_size(_isAdd);
 }
 
-std::shared_ptr<SubscriptionRequest> from_bytes(std::vector<unsigned char>::const_iterator& iter)
+std::shared_ptr<SubscriptionRequest> from_bytes(std::vector<char>::const_iterator& iter)
 {
     std::string feed;
     iter >> feed;
@@ -37,7 +37,7 @@ std::shared_ptr<SubscriptionRequest> from_bytes(std::vector<unsigned char>::cons
     return std::make_shared<SubscriptionRequest>(SubscriptionRequest(feed, topic, isAdd));
 }
 
-void SubscriptionRequest::writeBody(std::vector<unsigned char>::iterator& iter) const
+void SubscriptionRequest::writeBody(std::vector<char>::iterator& iter) const
 {
     iter << _feed;
     iter << _topic;

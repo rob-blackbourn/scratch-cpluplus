@@ -8,8 +8,8 @@
 
 using jetblack::messagebus::messages::BinaryDataPacket;
 
-std::vector<unsigned char>::iterator& operator << (
-    std::vector<unsigned char>::iterator& iter,
+std::vector<char>::iterator& operator << (
+    std::vector<char>::iterator& iter,
     const BinaryDataPacket& value)
 {
     iter << value.header();
@@ -17,14 +17,14 @@ std::vector<unsigned char>::iterator& operator << (
     return iter;
 }
 
-std::vector<unsigned char>::const_iterator& operator >> (
-    std::vector<unsigned char>::const_iterator& iter,
+std::vector<char>::const_iterator& operator >> (
+    std::vector<char>::const_iterator& iter,
     BinaryDataPacket& value)
 {
     boost::uuids::uuid header;
     iter >> header;
 
-    std::vector<unsigned char> body;
+    std::vector<char> body;
     iter >> body;
 
     value = BinaryDataPacket(header, std::move(body));

@@ -23,21 +23,21 @@ using jetblack::messagebus::messages::NotificationRequest;
 using jetblack::messagebus::messages::SubscriptionRequest;
 using jetblack::messagebus::messages::UnicastData;
 
-MessageType Message::readHeader(std::vector<unsigned char>::const_iterator& iter)
+MessageType Message::readHeader(std::vector<char>::const_iterator& iter)
 {
     unsigned char byte;
     iter >> byte;
     return static_cast<MessageType>(byte);
 }
 
-std::vector<unsigned char>::iterator& Message::writeHeader(std::vector<unsigned char>::iterator& sink) const
+std::vector<char>::iterator& Message::writeHeader(std::vector<char>::iterator& sink) const
 {
     unsigned char byte = static_cast<unsigned char>(type());
     sink << byte;
     return sink;
 }
 
-std::shared_ptr<Message> Message::from_bytes(std::vector<unsigned char>::const_iterator& source)
+std::shared_ptr<Message> Message::from_bytes(std::vector<char>::const_iterator& source)
 {
     MessageType type = readHeader(source);
 
@@ -76,10 +76,10 @@ std::shared_ptr<Message> Message::from_bytes(std::vector<unsigned char>::const_i
     }
 }
 
-std::shared_ptr<std::vector<unsigned char>> Message::to_bytes() const
+std::shared_ptr<std::vector<char>> Message::to_bytes() const
 {
     size_t size = headerSize() + bodySize();
-    std::shared_ptr<std::vector<unsigned char>> sink = std::make_shared<std::vector<unsigned char>>(size);
+    std::shared_ptr<std::vector<char>> sink = std::make_shared<std::vector<char>>(size);
 
     auto iter = sink->begin();
 

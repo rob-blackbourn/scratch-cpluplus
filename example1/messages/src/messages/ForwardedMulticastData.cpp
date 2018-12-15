@@ -31,7 +31,7 @@ size_t ForwardedMulticastData::bodySize() const
         serialize_size(_data);
 }
 
-std::shared_ptr<ForwardedMulticastData> from_bytes(std::vector<unsigned char>::const_iterator& iter)
+std::shared_ptr<ForwardedMulticastData> from_bytes(std::vector<char>::const_iterator& iter)
 {
     std::string user;
     iter >> user;
@@ -54,7 +54,7 @@ std::shared_ptr<ForwardedMulticastData> from_bytes(std::vector<unsigned char>::c
     return std::make_shared<ForwardedMulticastData>(ForwardedMulticastData(user, address, feed, topic, isImage, std::move(data)));
 }
 
-void ForwardedMulticastData::writeBody(std::vector<unsigned char>::iterator& iter) const
+void ForwardedMulticastData::writeBody(std::vector<char>::iterator& iter) const
 {
     iter << _user;
     iter << _address;

@@ -19,3 +19,5 @@ add_library(
 )
 
 target_include_directories(serialization PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
+
+add_subdirectory(tests)

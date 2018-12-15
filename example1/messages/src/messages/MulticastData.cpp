@@ -5,19 +5,18 @@
 #include "serialization/string.hpp"
 
 using jetblack::messagebus::messages::BinaryDataPacket;
-using jetblack::messagebus::messages::MulticastData;
 using jetblack::messagebus::messages::Message;
+using jetblack::messagebus::messages::MulticastData;
 
-size_t serialize_size(const MulticastData& value)
+size_t serialize_size(const MulticastData &value)
 {
-    return 
-        serialize_size(value.feed()) + 
-        serialize_size(value.topic()) + 
-        serialize_size(value.isImage()) +
-        serialize_size(value.data());
+    return serialize_size(value.feed()) +
+           serialize_size(value.topic()) +
+           serialize_size(value.isImage()) +
+           serialize_size(value.data());
 }
 
-std::shared_ptr<MulticastData> from_bytes(std::vector<unsigned char>::const_iterator& iter)
+std::shared_ptr<MulticastData> from_bytes(std::vector<char>::const_iterator &iter)
 {
     std::string feed;
     iter >> feed;
@@ -34,7 +33,7 @@ std::shared_ptr<MulticastData> from_bytes(std::vector<unsigned char>::const_iter
     return std::make_shared<MulticastData>(MulticastData(feed, topic, isImage, std::move(data)));
 }
 
-void MulticastData::writeBody(std::vector<unsigned char>::iterator& iter) const
+void MulticastData::writeBody(std::vector<char>::iterator &iter) const
 {
     iter << _feed;
     iter << _topic;
@@ -44,18 +43,17 @@ void MulticastData::writeBody(std::vector<unsigned char>::iterator& iter) const
 
 size_t MulticastData::bodySize() const
 {
-    return 
-        serialize_size(_feed) + 
-        serialize_size(_topic) + 
-        serialize_size(_isImage) +
-        serialize_size(_data);
+    return serialize_size(_feed) +
+           serialize_size(_topic) +
+           serialize_size(_isImage) +
+           serialize_size(_data);
 }
 
-std::ostream& operator << (std::ostream& os, const MulticastData& value)
+std::ostream &operator<<(std::ostream &os, const MulticastData &value)
 {
     return os
-        << "feed=\"" << value.feed() << "\""
-        << ",topic=\"" << value.topic() << "\""
-        << ",isImage=" << value.isImage() 
-        << ",data.size()=" << value.data().size();
+           << "feed=\"" << value.feed() << "\""
+           << ",topic=\"" << value.topic() << "\""
+           << ",isImage=" << value.isImage()
+           << ",data.size()=" << value.data().size();
 }
