@@ -7,6 +7,11 @@ target_link_libraries(NativeTest PRIVATE serialization)
 
 add_test(Native NativeTest)
 
+add_executable(StringTest string_test.cpp test_value.hpp)
+target_link_libraries(StringTest PRIVATE serialization)
+
+add_test(StringTest NativeTest)
+
 add_executable(BoostUuid boost/uuid/uuid_test.cpp test_value.hpp)
 target_link_libraries(BoostUuid PRIVATE serialization)
 
