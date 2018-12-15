@@ -21,3 +21,8 @@ add_executable(BoostAsioIp boost/asio/ip/ip_test.cpp test_value.hpp)
 target_link_libraries(BoostAsioIp PRIVATE serialization)
 
 add_test(BoostAsioIp BoostAsioIp)
+
+add_executable(TestVector test_vector.cpp test_value.hpp)
+target_link_libraries(TestVector PRIVATE serialization)
+
+add_test(TestVector TestVector)
