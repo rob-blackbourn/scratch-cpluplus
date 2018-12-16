@@ -10,15 +10,6 @@
 
 using jetblack::messagebus::messages::AuthorizationRequest;
 
-size_t serialize_size(const AuthorizationRequest &value)
-{
-    return serialize_size(value.clientId()) +
-           serialize_size(value.address()) +
-           serialize_size(value.user()) +
-           serialize_size(value.feed()) +
-           serialize_size(value.topic());
-}
-
 size_t AuthorizationRequest::bodySize() const
 {
     return serialize_size(_clientId) +

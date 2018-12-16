@@ -15,26 +15,42 @@ namespace jetblack::messagebus::messages
         {
         }
 
-        BinaryDataPacket(const boost::uuids::uuid& header, const std::vector<char>& body)
-            : _header(header), _body(body)
+        BinaryDataPacket(const boost::uuids::uuid& header_, const std::vector<char>& body_)
+            : _header(header_), _body(body_)
         {
         }
 
-        // BinaryDataPacket(BinaryDataPacket&& other)
-        //     : _header(other._header), _body(other._body)
-        // {
-        // }
-
-        // BinaryDataPacket& operator =(BinaryDataPacket&& other)
-        // {
-        //     _header = other._header;
-        //     _body = std::move(other._body);
-        //     return *this;
-        // }
-
-        size_t size() const
+        BinaryDataPacket(const boost::uuids::uuid& header_, std::vector<char>&& body_)
+            : _header(header_), _body(body_)
         {
-            return _header.size() + sizeof(size_t) + _body.size();
+        }
+
+        BinaryDataPacket(const BinaryDataPacket& other)
+            : _header(other._header), _body(other._body)
+        {
+        }
+
+        BinaryDataPacket(BinaryDataPacket&& other)
+            : _header(other._header), _body(std::move(other._body))
+        {
+        }
+
+        BinaryDataPacket& operator =(const BinaryDataPacket& other)
+        {
+            if (this == &other) return *this;
+
+            _header = other._header;
+            _body = std::move(other._body);
+            return *this;
+        }
+
+        BinaryDataPacket& operator =(BinaryDataPacket&& other)
+        {
+            if (this == &other) return *this;
+
+            _header = other._header;
+            _body = std::move(other._body);
+            return *this;
         }
 
         const boost::uuids::uuid& header() const { return _header; }
@@ -59,5 +75,9 @@ std::vector<char>::const_iterator& operator >> (
 std::ostream& operator << (
     std::ostream& os,
     const jetblack::messagebus::messages::BinaryDataPacket& value);
+
+bool operator == (
+    const jetblack::messagebus::messages::BinaryDataPacket& lhs,
+    const jetblack::messagebus::messages::BinaryDataPacket& rhs);
 
 #endif // __messages_BinaryDataPacket_hpp

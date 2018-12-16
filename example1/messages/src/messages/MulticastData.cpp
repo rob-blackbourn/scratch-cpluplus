@@ -8,14 +8,6 @@ using jetblack::messagebus::messages::BinaryDataPacket;
 using jetblack::messagebus::messages::Message;
 using jetblack::messagebus::messages::MulticastData;
 
-size_t serialize_size(const MulticastData &value)
-{
-    return serialize_size(value.feed()) +
-           serialize_size(value.topic()) +
-           serialize_size(value.isImage()) +
-           serialize_size(value.data());
-}
-
 std::shared_ptr<MulticastData> from_bytes(std::vector<char>::const_iterator &iter)
 {
     std::string feed;

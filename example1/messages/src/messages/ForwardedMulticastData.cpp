@@ -8,18 +8,6 @@
 using jetblack::messagebus::messages::ForwardedMulticastData;
 using jetblack::messagebus::messages::BinaryDataPacket;
 
-// TODO: Is this redundent?
-size_t serialize_size(const ForwardedMulticastData& value)
-{
-    return 
-        serialize_size(value.user()) + 
-        serialize_size(value.address()) + 
-        serialize_size(value.feed()) + 
-        serialize_size(value.topic()) +
-        serialize_size(value.isImage()) +
-        serialize_size(value.data());
-}
-
 size_t ForwardedMulticastData::bodySize() const
 {
     return 

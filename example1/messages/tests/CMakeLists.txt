@@ -1,0 +1,9 @@
+include_directories("/opt/boost/1.68.0/include")
+link_directories("/opt/boost/1.68.0/lib")
+link_libraries(boost_system)
+
+add_executable(TestBinaryDataPacket test_BinaryDataPacket.cpp)
+target_link_libraries(TestBinaryDataPacket PRIVATE serialization)
+target_link_libraries(TestBinaryDataPacket PRIVATE messages)
+
+add_test(TestBinaryDataPacket TestBinaryDataPacket)

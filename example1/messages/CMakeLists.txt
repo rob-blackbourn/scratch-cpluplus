@@ -30,3 +30,6 @@ add_library(
 target_include_directories(messages PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 target_link_libraries(messages PRIVATE serialization)
+
+add_subdirectory(tests)
+

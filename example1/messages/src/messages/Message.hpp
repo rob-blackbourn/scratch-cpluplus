@@ -8,33 +8,33 @@
 
 namespace jetblack::messagebus::messages
 {
-class Message
-{
-  public:
-    Message()
+    class Message
     {
-    }
+    public:
+        Message()
+        {
+        }
 
-    Message(MessageType type)
-        : _type(type)
-    {
-    }
+        Message(MessageType type)
+            : _type(type)
+        {
+        }
 
-    MessageType type() const { return _type; }
+        MessageType type() const { return _type; }
 
-    static std::shared_ptr<Message> from_bytes(std::vector<char>::const_iterator &source);
-    std::shared_ptr<std::vector<char>> to_bytes() const;
+        static std::shared_ptr<Message> from_bytes(std::vector<char>::const_iterator &source);
+        std::shared_ptr<std::vector<char>> to_bytes() const;
 
-  protected:
-    size_t headerSize() const { return sizeof(unsigned char); }
-    static MessageType readHeader(std::vector<char>::const_iterator &source);
-    std::vector<char>::iterator &writeHeader(std::vector<char>::iterator &sink) const;
-    virtual size_t bodySize() const = 0;
-    virtual void writeBody(std::vector<char>::iterator &sink) const = 0;
+    protected:
+        size_t headerSize() const { return sizeof(unsigned char); }
+        static MessageType readHeader(std::vector<char>::const_iterator &source);
+        std::vector<char>::iterator &writeHeader(std::vector<char>::iterator &sink) const;
+        virtual size_t bodySize() const = 0;
+        virtual void writeBody(std::vector<char>::iterator &sink) const = 0;
 
-  private:
-    MessageType _type;
-};
-} // namespace jetblack::messagebus::messages
+    private:
+        MessageType _type;
+    };
+}
 
 #endif // __messages_Message_hpp

@@ -58,8 +58,6 @@ namespace jetblack::messagebus::messages
     };
 }
 
-size_t serialize_size(const jetblack::messagebus::messages::AuthorizationRequest& value);
-
 std::ostream& operator << (std::ostream& os, const jetblack::messagebus::messages::AuthorizationRequest& value);
 
 #endif // __messages_AuthorizationRequest_hpp

@@ -43,8 +43,6 @@ namespace jetblack::messagebus::messages
     };
 }
 
-size_t serialize_size(const jetblack::messagebus::messages::InteractorAdvertisement& value);
-
 std::ostream& operator << (std::ostream& os, const jetblack::messagebus::messages::InteractorAdvertisement& value);
 
 #endif // __messages_InteractorAdvertisement_hpp

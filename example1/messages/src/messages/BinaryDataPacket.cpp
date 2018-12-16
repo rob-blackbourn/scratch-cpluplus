@@ -34,7 +34,7 @@ std::vector<char>::const_iterator& operator >> (
 
 size_t serialize_size(const BinaryDataPacket& value)
 {
-    auto b = value.body();
+    const std::vector<char>& b = value.body();
 
     return
         serialize_size(value.header()) + 
@@ -44,4 +44,10 @@ size_t serialize_size(const BinaryDataPacket& value)
 std::ostream& operator << (std::ostream& os, const BinaryDataPacket& value)
 {
     return os << "header=" << value.header() << ",body.size()=" << value.body().size();
+}
+
+bool operator == (const BinaryDataPacket& lhs, const BinaryDataPacket& rhs)
+{
+    return lhs.header() == rhs.header() &&
+        lhs.body() == rhs.body();
 }

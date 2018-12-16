@@ -6,13 +6,6 @@
 
 using jetblack::messagebus::messages::NotificationRequest;
 
-// TODO: Is this redundent?
-size_t serialize_size(const NotificationRequest &value)
-{
-    return serialize_size(value.feed()) +
-           serialize_size(value.isAdd());
-}
-
 size_t NotificationRequest::bodySize() const
 {
     return serialize_size(_feed) +

@@ -8,16 +8,6 @@
 
 using jetblack::messagebus::messages::ForwardedSubscriptionRequest;
 
-// TODO: Is this redundent?
-size_t serialize_size(const ForwardedSubscriptionRequest &value)
-{
-    return serialize_size(value.user()) +
-           serialize_size(value.address()) +
-           serialize_size(value.feed()) +
-           serialize_size(value.topic()) +
-           serialize_size(value.isAdd());
-}
-
 size_t ForwardedSubscriptionRequest::bodySize() const
 {
     return serialize_size(_user) +

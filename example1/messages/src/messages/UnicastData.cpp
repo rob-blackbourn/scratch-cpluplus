@@ -11,15 +11,6 @@ using jetblack::messagebus::messages::BinaryDataPacket;
 using jetblack::messagebus::messages::Message;
 using jetblack::messagebus::messages::UnicastData;
 
-size_t serialize_size(const UnicastData &value)
-{
-    return serialize_size(value.clientId()) +
-           serialize_size(value.feed()) +
-           serialize_size(value.topic()) +
-           serialize_size(value.isImage()) +
-           serialize_size(value.data());
-}
-
 std::shared_ptr<UnicastData> from_bytes(std::vector<char>::const_iterator &iter)
 {
     boost::uuids::uuid clientId;

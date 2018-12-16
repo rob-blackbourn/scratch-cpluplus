@@ -6,15 +6,6 @@
 
 using jetblack::messagebus::messages::SubscriptionRequest;
 
-// TODO: Is this redundent?
-size_t serialize_size(const SubscriptionRequest& value)
-{
-    return 
-        serialize_size(value.feed()) + 
-        serialize_size(value.topic()) + 
-        serialize_size(value.isAdd());
-}
-
 size_t SubscriptionRequest::bodySize() const
 {
     return
