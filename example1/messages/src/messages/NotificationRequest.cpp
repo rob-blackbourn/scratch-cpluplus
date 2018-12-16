@@ -12,7 +12,7 @@ size_t NotificationRequest::bodySize() const noexcept
            serialize_size(_isAdd);
 }
 
-std::shared_ptr<NotificationRequest> from_bytes(std::vector<char>::const_iterator &iter)
+std::shared_ptr<NotificationRequest> NotificationRequest::from_bytes(std::vector<char>::const_iterator &iter)
 {
     std::string feed;
     iter >> feed;

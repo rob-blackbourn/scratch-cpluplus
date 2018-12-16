@@ -20,7 +20,7 @@ size_t UnicastData::bodySize() const noexcept
            serialize_size(_data);
 }
 
-std::shared_ptr<UnicastData> from_bytes(std::vector<char>::const_iterator &iter)
+std::shared_ptr<UnicastData> UnicastData::from_bytes(std::vector<char>::const_iterator &iter)
 {
     boost::uuids::uuid clientId;
     iter >> clientId;

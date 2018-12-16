@@ -15,28 +15,12 @@ namespace jetblack::messagebus::messages
         {
         }
 
-        BinaryDataPacket(const boost::uuids::uuid& header_, const std::vector<char>& body_) noexcept
-            : _header(header_), _body(body_)
+        BinaryDataPacket(
+            const boost::uuids::uuid& header_,
+            std::vector<char>&& body_) noexcept
+            :   _header(header_),
+                _body(std::move(body_))
         {
-        }
-
-        BinaryDataPacket(const boost::uuids::uuid& header_, std::vector<char>&& body_) noexcept
-            : _header(header_), _body(body_)
-        {
-        }
-
-        BinaryDataPacket(const BinaryDataPacket& other) noexcept
-            : _header(other._header), _body(other._body)
-        {
-        }
-
-        BinaryDataPacket& operator =(const BinaryDataPacket& other) noexcept
-        {
-            if (this == &other) return *this;
-
-            _header = other._header;
-            _body = std::move(other._body);
-            return *this;
         }
 
         BinaryDataPacket(BinaryDataPacket&& other) noexcept

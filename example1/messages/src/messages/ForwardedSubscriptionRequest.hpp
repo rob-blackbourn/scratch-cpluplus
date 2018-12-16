@@ -63,4 +63,8 @@ namespace jetblack::messagebus::messages
 
 std::ostream &operator<<(std::ostream &os, const jetblack::messagebus::messages::ForwardedSubscriptionRequest &value);
 
+bool operator==(
+    const jetblack::messagebus::messages::ForwardedSubscriptionRequest &lhs,
+    const jetblack::messagebus::messages::ForwardedSubscriptionRequest &rhs) noexcept;
+
 #endif // __messages_ForwardedSubscriptionRequest_hpp

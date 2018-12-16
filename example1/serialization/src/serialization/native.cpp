@@ -23,7 +23,7 @@ std::vector<char>::iterator &operator<<(
     std::vector<char>::iterator &iter,
     bool value)
 {
-    *iter++ = value ? 1 : 0;
+    *iter++ = static_cast<char>(value ? 1 : 0);
     return iter;
 }
 

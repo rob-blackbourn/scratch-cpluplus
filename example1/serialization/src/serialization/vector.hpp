@@ -18,7 +18,7 @@ inline std::vector<char>::const_iterator &operator>>(
     {
         T element;
         iter >> element;
-        value.push_back(element);
+        value.push_back(std::move(element));
     }
     return iter;
 }

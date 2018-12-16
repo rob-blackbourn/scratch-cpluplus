@@ -7,3 +7,9 @@ target_link_libraries(TestBinaryDataPacket PRIVATE serialization)
 target_link_libraries(TestBinaryDataPacket PRIVATE messages)
 
 add_test(TestBinaryDataPacket TestBinaryDataPacket)
+
+add_executable(TestForwardedSubscriptionRequest test_ForwardedSubscriptionRequest.cpp)
+target_link_libraries(TestForwardedSubscriptionRequest PRIVATE serialization)
+target_link_libraries(TestForwardedSubscriptionRequest PRIVATE messages)
+
+add_test(TestForwardedSubscriptionRequest TestForwardedSubscriptionRequest)

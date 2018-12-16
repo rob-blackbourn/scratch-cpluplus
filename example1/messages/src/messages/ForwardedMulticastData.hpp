@@ -33,7 +33,7 @@ namespace jetblack::messagebus::messages
               _feed(feed),
               _topic(topic),
               _isImage(isImage),
-              _data(data)
+              _data(std::move(data))
         {
         }
 

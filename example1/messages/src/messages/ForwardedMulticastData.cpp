@@ -19,7 +19,7 @@ size_t ForwardedMulticastData::bodySize() const noexcept
         serialize_size(_data);
 }
 
-std::shared_ptr<ForwardedMulticastData> from_bytes(std::vector<char>::const_iterator& iter)
+std::shared_ptr<ForwardedMulticastData> ForwardedMulticastData::from_bytes(std::vector<char>::const_iterator& iter)
 {
     std::string user;
     iter >> user;

@@ -14,7 +14,7 @@ size_t InteractorAdvertisement::bodySize() const noexcept
            serialize_size(_isJoining);
 }
 
-std::shared_ptr<InteractorAdvertisement> from_bytes(std::vector<char>::const_iterator &iter)
+std::shared_ptr<InteractorAdvertisement> InteractorAdvertisement::from_bytes(std::vector<char>::const_iterator &iter)
 {
     std::string user;
     iter >> user;

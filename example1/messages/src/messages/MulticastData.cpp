@@ -16,7 +16,7 @@ size_t MulticastData::bodySize() const noexcept
            serialize_size(_data);
 }
 
-std::shared_ptr<MulticastData> from_bytes(std::vector<char>::const_iterator &iter)
+std::shared_ptr<MulticastData> MulticastData::from_bytes(std::vector<char>::const_iterator &iter)
 {
     std::string feed;
     iter >> feed;

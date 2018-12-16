@@ -17,7 +17,7 @@ size_t ForwardedSubscriptionRequest::bodySize() const noexcept
            serialize_size(_isAdd);
 }
 
-std::shared_ptr<ForwardedSubscriptionRequest> from_bytes(std::vector<char>::const_iterator &iter)
+std::shared_ptr<ForwardedSubscriptionRequest> ForwardedSubscriptionRequest::from_bytes(std::vector<char>::const_iterator &iter)
 {
     std::string user;
     iter >> user;
@@ -59,4 +59,16 @@ std::ostream &operator<<(std::ostream &os, const ForwardedSubscriptionRequest &v
            << ",feed=\"" << value.feed() << "\""
            << ",topic=\"" << value.topic() << "\""
            << ",isAdd=" << value.isAdd();
+}
+
+bool operator==(
+    const jetblack::messagebus::messages::ForwardedSubscriptionRequest &lhs,
+    const jetblack::messagebus::messages::ForwardedSubscriptionRequest &rhs) noexcept
+{
+    return lhs.user() == rhs.user() &&
+        lhs.address() == rhs.address() &&
+        lhs.clientId() == rhs.clientId() &&
+        lhs.feed() == rhs.feed() &&
+        lhs.topic() == rhs.topic() &&
+        lhs.isAdd() == rhs.isAdd();    
 }
