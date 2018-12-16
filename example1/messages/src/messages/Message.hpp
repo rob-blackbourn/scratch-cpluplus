@@ -11,25 +11,25 @@ namespace jetblack::messagebus::messages
     class Message
     {
     public:
-        Message()
+        Message() noexcept
         {
         }
 
-        Message(MessageType type)
+        Message(MessageType type) noexcept
             : _type(type)
         {
         }
 
-        MessageType type() const { return _type; }
+        MessageType type() const noexcept { return _type; }
 
         static std::shared_ptr<Message> from_bytes(std::vector<char>::const_iterator &source);
         std::shared_ptr<std::vector<char>> to_bytes() const;
 
     protected:
-        size_t headerSize() const { return sizeof(unsigned char); }
+        size_t headerSize() const noexcept { return sizeof(unsigned char); }
         static MessageType readHeader(std::vector<char>::const_iterator &source);
         std::vector<char>::iterator &writeHeader(std::vector<char>::iterator &sink) const;
-        virtual size_t bodySize() const = 0;
+        virtual size_t bodySize() const noexcept = 0;
         virtual void writeBody(std::vector<char>::iterator &sink) const = 0;
 
     private:

@@ -13,7 +13,7 @@ std::vector<char>::iterator &operator<<(
     std::vector<char>::iterator &iter,
     const boost::asio::mutable_buffer &value);
 
-size_t serialize_size(const boost::asio::mutable_buffer &value);
+size_t serialize_size(const boost::asio::mutable_buffer &value) noexcept;
 
 std::vector<char>::const_iterator &operator>>(
     std::vector<char>::const_iterator &iter,
@@ -23,6 +23,6 @@ std::vector<char>::iterator &operator<<(
     std::vector<char>::iterator &iter,
     const boost::asio::const_buffer &value);
 
-size_t serialize_size(const boost::asio::const_buffer &value);
+size_t serialize_size(const boost::asio::const_buffer &value) noexcept;
 
 #endif // __serialization_boost_buffer_hpp

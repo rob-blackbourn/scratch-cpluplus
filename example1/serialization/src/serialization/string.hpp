@@ -29,6 +29,6 @@ inline std::vector<char>::iterator &operator<<(
     return iter;
 }
 
-size_t serialize_size(const std::string &value);
+size_t serialize_size(const std::string &value) noexcept;
 
 #endif // __serialization_string_hpp

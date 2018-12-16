@@ -11,27 +11,22 @@ namespace jetblack::messagebus::messages
     {
     public:
 
-        BinaryDataPacket()
+        BinaryDataPacket() noexcept
         {
         }
 
-        BinaryDataPacket(const boost::uuids::uuid& header_, const std::vector<char>& body_)
+        BinaryDataPacket(const boost::uuids::uuid& header_, const std::vector<char>& body_) noexcept
             : _header(header_), _body(body_)
         {
         }
 
-        BinaryDataPacket(const boost::uuids::uuid& header_, std::vector<char>&& body_)
+        BinaryDataPacket(const boost::uuids::uuid& header_, std::vector<char>&& body_) noexcept
             : _header(header_), _body(body_)
         {
         }
 
         BinaryDataPacket(const BinaryDataPacket& other)
             : _header(other._header), _body(other._body)
-        {
-        }
-
-        BinaryDataPacket(BinaryDataPacket&& other)
-            : _header(other._header), _body(std::move(other._body))
         {
         }
 
@@ -44,7 +39,12 @@ namespace jetblack::messagebus::messages
             return *this;
         }
 
-        BinaryDataPacket& operator =(BinaryDataPacket&& other)
+        BinaryDataPacket(BinaryDataPacket&& other) noexcept
+            : _header(other._header), _body(std::move(other._body))
+        {
+        }
+
+        BinaryDataPacket& operator =(BinaryDataPacket&& other) noexcept
         {
             if (this == &other) return *this;
 
@@ -53,8 +53,8 @@ namespace jetblack::messagebus::messages
             return *this;
         }
 
-        const boost::uuids::uuid& header() const { return _header; }
-        const std::vector<char>& body() const { return _body; }
+        const boost::uuids::uuid& header() const noexcept { return _header; }
+        const std::vector<char>& body() const noexcept { return _body; }
 
     private:
         boost::uuids::uuid _header;
@@ -62,7 +62,7 @@ namespace jetblack::messagebus::messages
     };
 }
 
-size_t serialize_size(const jetblack::messagebus::messages::BinaryDataPacket& value);
+size_t serialize_size(const jetblack::messagebus::messages::BinaryDataPacket& value) noexcept;
 
 std::vector<char>::iterator& operator << (
     std::vector<char>::iterator& iter,
@@ -78,6 +78,6 @@ std::ostream& operator << (
 
 bool operator == (
     const jetblack::messagebus::messages::BinaryDataPacket& lhs,
-    const jetblack::messagebus::messages::BinaryDataPacket& rhs);
+    const jetblack::messagebus::messages::BinaryDataPacket& rhs) noexcept;
 
 #endif // __messages_BinaryDataPacket_hpp

@@ -6,7 +6,7 @@
 
 using jetblack::messagebus::messages::SubscriptionRequest;
 
-size_t SubscriptionRequest::bodySize() const
+size_t SubscriptionRequest::bodySize() const noexcept
 {
     return
         serialize_size(_feed) + 

@@ -9,7 +9,7 @@
 
 using jetblack::messagebus::messages::AuthorizationResponse;
 
-size_t AuthorizationResponse::bodySize() const
+size_t AuthorizationResponse::bodySize() const noexcept
 {
     return serialize_size(_clientId) +
            serialize_size(_feed) +

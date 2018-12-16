@@ -6,7 +6,7 @@
  * bool
  */
 
-size_t serialize_size(bool value)
+size_t serialize_size(bool value) noexcept
 {
     return sizeof(unsigned char);
 }
@@ -31,7 +31,7 @@ std::vector<char>::iterator &operator<<(
  * unsigned char
  */
 
-size_t serialize_size(unsigned char value)
+size_t serialize_size(unsigned char value) noexcept
 {
     return sizeof(unsigned char);
 }
@@ -56,7 +56,7 @@ std::vector<char>::iterator &operator<<(
  * char
  */
 
-size_t serialize_size(char value)
+size_t serialize_size(char value) noexcept
 {
     return sizeof(char);
 }
@@ -81,7 +81,7 @@ std::vector<char>::iterator &operator<<(
  * unsigned int
  */
 
-size_t serialize_size(unsigned int value)
+size_t serialize_size(unsigned int value) noexcept
 {
     return sizeof(char) * 4;
 }
@@ -114,7 +114,7 @@ std::vector<char>::iterator &operator<<(
  * int
  */
 
-size_t serialize_size(int value)
+size_t serialize_size(int value) noexcept
 {
     return serialize_size(static_cast<unsigned int>(value));
 }
@@ -141,7 +141,7 @@ std::vector<char>::iterator &operator<<(
  * size_t
  */
 
-size_t serialize_size(size_t value)
+size_t serialize_size(size_t value) noexcept
 {
     return sizeof(char) * 8;
 }
@@ -180,7 +180,7 @@ std::vector<char>::iterator &operator<<(
 
 // char*
 
-size_t serialize_size(const char* value)
+size_t serialize_size(const char* value) noexcept
 {
     return sizeof(size_t) + strlen(value);
 }

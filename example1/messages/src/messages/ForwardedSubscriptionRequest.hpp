@@ -16,28 +16,39 @@ namespace jetblack::messagebus::messages
     class ForwardedSubscriptionRequest : public Message
     {
     public:
-        ForwardedSubscriptionRequest()
+        ForwardedSubscriptionRequest() noexcept
             : Message(MessageType::ForwardedSubscriptionRequest)
         {
         }
 
-        ForwardedSubscriptionRequest(const std::string &user, const boost::asio::ip::address &address, const boost::uuids::uuid &clientId, const std::string &feed, const std::string &topic, bool isAdd)
-            : Message(MessageType::ForwardedSubscriptionRequest),
-            _user(user), _address(address), _clientId(clientId), _feed(feed), _topic(topic), _isAdd(isAdd)
+        ForwardedSubscriptionRequest(
+            const std::string &user,
+            const boost::asio::ip::address &address,
+            const boost::uuids::uuid &clientId,
+            const std::string &feed,
+            const std::string &topic,
+            bool isAdd) noexcept
+            :   Message(MessageType::ForwardedSubscriptionRequest),
+                _user(user),
+                _address(address),
+                _clientId(clientId),
+                _feed(feed),
+                _topic(topic),
+                _isAdd(isAdd)
         {
         }
 
-        const std::string &user() const { return _user; }
-        const boost::asio::ip::address &address() const { return _address; }
-        const boost::uuids::uuid &clientId() const { return _clientId; }
-        const std::string &feed() const { return _feed; }
-        const std::string &topic() const { return _topic; }
-        bool isAdd() const { return _isAdd; }
+        const std::string &user() const noexcept { return _user; }
+        const boost::asio::ip::address &address() const noexcept { return _address; }
+        const boost::uuids::uuid &clientId() const noexcept { return _clientId; }
+        const std::string &feed() const noexcept { return _feed; }
+        const std::string &topic() const noexcept { return _topic; }
+        bool isAdd() const noexcept { return _isAdd; }
 
         static std::shared_ptr<ForwardedSubscriptionRequest> from_bytes(std::vector<char>::const_iterator &iter);
 
     protected:
-        virtual size_t bodySize() const;
+        virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator &sink) const;
 
     private:

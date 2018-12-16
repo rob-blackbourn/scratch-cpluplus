@@ -8,7 +8,7 @@
 using jetblack::messagebus::messages::ForwardedMulticastData;
 using jetblack::messagebus::messages::BinaryDataPacket;
 
-size_t ForwardedMulticastData::bodySize() const
+size_t ForwardedMulticastData::bodySize() const noexcept
 {
     return 
         serialize_size(_user) + 

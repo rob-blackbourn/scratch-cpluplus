@@ -35,7 +35,7 @@ inline std::vector<char>::iterator &operator<<(
 }
 
 template <typename T>
-inline size_t serialize_size(std::vector<T> const &value)
+inline size_t serialize_size(std::vector<T> const &value) noexcept
 {
     return sizeof(size_t) +
            std::accumulate(

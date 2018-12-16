@@ -15,25 +15,30 @@ namespace jetblack::messagebus::messages
     class InteractorAdvertisement : public Message
     {
     public:
-        InteractorAdvertisement()
+        InteractorAdvertisement() noexcept
             : Message(MessageType::InteractorAdvertisement)
         {
         }
 
-        InteractorAdvertisement(const std::string& user, const boost::asio::ip::address& address, bool isJoining)
-            : Message(MessageType::InteractorAdvertisement),
-              _user(user), _address(address), _isJoining(isJoining)
+        InteractorAdvertisement(
+            const std::string& user,
+            const boost::asio::ip::address& address,
+            bool isJoining) noexcept
+            :   Message(MessageType::InteractorAdvertisement),
+                _user(user),
+                _address(address),
+                _isJoining(isJoining)
         {
         }
 
-        const std::string& user() const { return _user; }
-        const boost::asio::ip::address& address() const { return _address; }
-        bool isJoining() const { return _isJoining; }
+        const std::string& user() const noexcept { return _user; }
+        const boost::asio::ip::address& address() const noexcept { return _address; }
+        bool isJoining() const noexcept { return _isJoining; }
         
         static std::shared_ptr<InteractorAdvertisement> from_bytes(std::vector<char>::const_iterator& iter);
 
     protected:
-        virtual size_t bodySize() const;
+        virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator& sink) const;
 
     private:

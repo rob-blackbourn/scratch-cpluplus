@@ -107,7 +107,7 @@ std::vector<char>::iterator &operator<<(
     return iter;
 }
 
-size_t serialize_size(const boost::asio::ip::address &value)
+size_t serialize_size(const boost::asio::ip::address &value) noexcept
 {
     return sizeof(size_t) + (value.is_v4() ? value.to_v4().to_bytes().size() : sizeof(size_t) + value.to_v6().to_bytes().size());
 }

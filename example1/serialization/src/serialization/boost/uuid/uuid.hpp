@@ -14,6 +14,6 @@ std::vector<char>::iterator &operator<<(
     std::vector<char>::iterator &iter,
     const boost::uuids::uuid &value);
 
-size_t serialize_size(const boost::uuids::uuid &value);
+size_t serialize_size(const boost::uuids::uuid &value) noexcept;
 
 #endif // __serialization_boost_uuid_hpp

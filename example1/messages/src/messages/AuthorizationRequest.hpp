@@ -17,7 +17,7 @@ namespace jetblack::messagebus::messages
     {
     public:
 
-        AuthorizationRequest()
+        AuthorizationRequest() noexcept
             : Message(MessageType::AuthorizationRequest)
         {
         }
@@ -27,26 +27,26 @@ namespace jetblack::messagebus::messages
             const boost::asio::ip::address& address,
             const std::string& user,
             const std::string& feed,
-            const std::string& topic
-        ) : Message(MessageType::AuthorizationRequest),
-            _clientId(clientId),
-            _address(address),
-            _user(user),
-            _feed(feed),
-            _topic(topic)
+            const std::string& topic) noexcept
+            :   Message(MessageType::AuthorizationRequest),
+                _clientId(clientId),
+                _address(address),
+                _user(user),
+                _feed(feed),
+                _topic(topic)
         {
         }
 
-        const boost::uuids::uuid& clientId() const { return _clientId; }
-        const boost::asio::ip::address& address() const { return _address; }
-        const std::string& user() const { return _user; }
-        const std::string& feed() const { return _feed; }
-        const std::string& topic() const { return _topic; }
+        const boost::uuids::uuid& clientId() const noexcept { return _clientId; }
+        const boost::asio::ip::address& address() const noexcept { return _address; }
+        const std::string& user() const noexcept { return _user; }
+        const std::string& feed() const noexcept { return _feed; }
+        const std::string& topic() const noexcept { return _topic; }
 
         static std::shared_ptr<AuthorizationRequest> from_bytes(std::vector<char>::const_iterator& iter);
 
     protected:
-        virtual size_t bodySize() const;
+        virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator& sink) const;
 
     private:

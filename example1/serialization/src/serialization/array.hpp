@@ -7,7 +7,7 @@
 #include "serialization/native.hpp"
 
 template <std::size_t N>
-inline size_t serialize_size(const std::array<unsigned char, N> &value)
+inline size_t serialize_size(const std::array<unsigned char, N> &value) noexcept
 {
     return N;
 }

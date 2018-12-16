@@ -8,6 +8,14 @@ using jetblack::messagebus::messages::BinaryDataPacket;
 using jetblack::messagebus::messages::Message;
 using jetblack::messagebus::messages::MulticastData;
 
+size_t MulticastData::bodySize() const noexcept
+{
+    return serialize_size(_feed) +
+           serialize_size(_topic) +
+           serialize_size(_isImage) +
+           serialize_size(_data);
+}
+
 std::shared_ptr<MulticastData> from_bytes(std::vector<char>::const_iterator &iter)
 {
     std::string feed;
@@ -31,14 +39,6 @@ void MulticastData::writeBody(std::vector<char>::iterator &iter) const
     iter << _topic;
     iter << _isImage;
     iter << _data;
-}
-
-size_t MulticastData::bodySize() const
-{
-    return serialize_size(_feed) +
-           serialize_size(_topic) +
-           serialize_size(_isImage) +
-           serialize_size(_data);
 }
 
 std::ostream &operator<<(std::ostream &os, const MulticastData &value)

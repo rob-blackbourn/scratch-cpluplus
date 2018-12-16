@@ -8,6 +8,15 @@
 
 using jetblack::messagebus::messages::BinaryDataPacket;
 
+size_t serialize_size(const BinaryDataPacket& value) noexcept
+{
+    const std::vector<char>& b = value.body();
+
+    return
+        serialize_size(value.header()) + 
+        serialize_size(b);
+}
+
 std::vector<char>::iterator& operator << (
     std::vector<char>::iterator& iter,
     const BinaryDataPacket& value)
@@ -32,21 +41,12 @@ std::vector<char>::const_iterator& operator >> (
     return iter;
 }
 
-size_t serialize_size(const BinaryDataPacket& value)
-{
-    const std::vector<char>& b = value.body();
-
-    return
-        serialize_size(value.header()) + 
-        serialize_size(b);
-}
-
 std::ostream& operator << (std::ostream& os, const BinaryDataPacket& value)
 {
     return os << "header=" << value.header() << ",body.size()=" << value.body().size();
 }
 
-bool operator == (const BinaryDataPacket& lhs, const BinaryDataPacket& rhs)
+bool operator == (const BinaryDataPacket& lhs, const BinaryDataPacket& rhs) noexcept
 {
     return lhs.header() == rhs.header() &&
         lhs.body() == rhs.body();

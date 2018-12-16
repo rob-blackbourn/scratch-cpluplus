@@ -8,7 +8,7 @@
 
 using jetblack::messagebus::messages::ForwardedSubscriptionRequest;
 
-size_t ForwardedSubscriptionRequest::bodySize() const
+size_t ForwardedSubscriptionRequest::bodySize() const noexcept
 {
     return serialize_size(_user) +
            serialize_size(_address) +

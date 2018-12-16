@@ -7,7 +7,7 @@
 
 using jetblack::messagebus::messages::InteractorAdvertisement;
 
-size_t InteractorAdvertisement::bodySize() const
+size_t InteractorAdvertisement::bodySize() const noexcept
 {
     return serialize_size(_user) +
            serialize_size(_address) +

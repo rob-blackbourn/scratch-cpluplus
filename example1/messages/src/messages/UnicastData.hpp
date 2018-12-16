@@ -16,27 +16,36 @@ namespace jetblack::messagebus::messages
     class UnicastData : public Message
     {
     public:
-        UnicastData()
-            : Message(MessageType::UnicastData)
+        UnicastData() noexcept
+            :   Message(MessageType::UnicastData)
         {
         }
 
-        UnicastData(const boost::uuids::uuid& clientId, const std::string& feed, const std::string& topic, bool isImage, std::vector<BinaryDataPacket>&& data)
-            : Message(MessageType::UnicastData), 
-              _clientId(clientId), _feed(feed), _topic(topic), _isImage(isImage), _data(std::move(data))
+        UnicastData(
+            const boost::uuids::uuid& clientId,
+            const std::string& feed,
+            const std::string& topic,
+            bool isImage,
+            std::vector<BinaryDataPacket>&& data) noexcept
+            :   Message(MessageType::UnicastData), 
+                _clientId(clientId),
+                _feed(feed),
+                _topic(topic),
+                _isImage(isImage),
+                _data(data)
         {
         }
 
-        const boost::uuids::uuid& clientId() const { return _clientId; }
-        const std::string& feed() const { return _feed; }
-        const std::string& topic() const { return _topic; }
-        const bool isImage() const { return _isImage; }
-        const std::vector<BinaryDataPacket>& data() const { return _data; }
+        const boost::uuids::uuid& clientId() const noexcept { return _clientId; }
+        const std::string& feed() const noexcept { return _feed; }
+        const std::string& topic() const noexcept { return _topic; }
+        const bool isImage() const noexcept { return _isImage; }
+        const std::vector<BinaryDataPacket>& data() const noexcept { return _data; }
 
         static std::shared_ptr<UnicastData> from_bytes(std::vector<char>::const_iterator& iter);
 
     protected:
-        virtual size_t bodySize() const;
+        virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator& sink) const;
 
     private:

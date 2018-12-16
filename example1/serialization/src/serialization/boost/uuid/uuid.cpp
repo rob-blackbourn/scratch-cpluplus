@@ -9,7 +9,7 @@
 #include "serialization/native.hpp"
 #include "serialization/vector.hpp"
 
-size_t serialize_size(const boost::uuids::uuid &value)
+size_t serialize_size(const boost::uuids::uuid &value) noexcept
 {
     return value.size();
 }

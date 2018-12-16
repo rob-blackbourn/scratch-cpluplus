@@ -6,7 +6,7 @@
 
 using jetblack::messagebus::messages::NotificationRequest;
 
-size_t NotificationRequest::bodySize() const
+size_t NotificationRequest::bodySize() const noexcept
 {
     return serialize_size(_feed) +
            serialize_size(_isAdd);

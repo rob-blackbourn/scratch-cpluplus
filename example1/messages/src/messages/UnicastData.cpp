@@ -11,6 +11,15 @@ using jetblack::messagebus::messages::BinaryDataPacket;
 using jetblack::messagebus::messages::Message;
 using jetblack::messagebus::messages::UnicastData;
 
+size_t UnicastData::bodySize() const noexcept
+{
+    return serialize_size(_clientId) +
+           serialize_size(_feed) +
+           serialize_size(_topic) +
+           serialize_size(_isImage) +
+           serialize_size(_data);
+}
+
 std::shared_ptr<UnicastData> from_bytes(std::vector<char>::const_iterator &iter)
 {
     boost::uuids::uuid clientId;
@@ -38,15 +47,6 @@ void UnicastData::writeBody(std::vector<char>::iterator &iter) const
     iter << _topic;
     iter << _isImage;
     iter << _data;
-}
-
-size_t UnicastData::bodySize() const
-{
-    return serialize_size(_clientId) +
-           serialize_size(_feed) +
-           serialize_size(_topic) +
-           serialize_size(_isImage) +
-           serialize_size(_data);
 }
 
 std::ostream &operator<<(std::ostream &os, const UnicastData &value)

@@ -15,7 +15,7 @@ namespace jetblack::messagebus::messages
     class AuthorizationResponse : public Message
     {
     public:
-        AuthorizationResponse()
+        AuthorizationResponse() noexcept
             : Message(MessageType::AuthorizationResponse)
         {
         }
@@ -25,25 +25,26 @@ namespace jetblack::messagebus::messages
             const std::string &feed,
             const std::string &topic,
             bool isAuthorizationRequired,
-            const std::vector<boost::uuids::uuid> &entitlements) : Message(MessageType::AuthorizationResponse),
-                                                                _clientId(clientId),
-                                                                _feed(feed),
-                                                                _topic(topic),
-                                                                _isAuthorizationRequired(isAuthorizationRequired),
-                                                                _entitlements(entitlements)
+            const std::vector<boost::uuids::uuid> &entitlements) noexcept
+            :   Message(MessageType::AuthorizationResponse),
+                _clientId(clientId),
+                _feed(feed),
+                _topic(topic),
+                _isAuthorizationRequired(isAuthorizationRequired),
+                _entitlements(entitlements)
         {
         }
 
-        const boost::uuids::uuid &clientId() const { return _clientId; }
-        const std::string &feed() const { return _feed; }
-        const std::string &topic() const { return _topic; }
-        bool isAuthorizationRequired() const { return _isAuthorizationRequired; }
-        const std::vector<boost::uuids::uuid> &entitlements() const { return _entitlements; }
+        const boost::uuids::uuid &clientId() const noexcept { return _clientId; }
+        const std::string &feed() const noexcept { return _feed; }
+        const std::string &topic() const noexcept { return _topic; }
+        bool isAuthorizationRequired() const noexcept { return _isAuthorizationRequired; }
+        const std::vector<boost::uuids::uuid> &entitlements() const noexcept { return _entitlements; }
 
         static std::shared_ptr<AuthorizationResponse> from_bytes(std::vector<char>::const_iterator &iter);
 
     protected:
-        virtual size_t bodySize() const;
+        virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator &sink) const;
 
     private:

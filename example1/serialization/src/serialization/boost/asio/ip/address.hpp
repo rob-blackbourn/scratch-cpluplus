@@ -33,6 +33,6 @@ std::vector<char>::iterator &operator<<(
     std::vector<char>::iterator &iter,
     const boost::asio::ip::address &value);
 
-size_t serialize_size(const boost::asio::ip::address &value);
+size_t serialize_size(const boost::asio::ip::address &value) noexcept;
 
 #endif // __serialization_boost_ip_address_hpp

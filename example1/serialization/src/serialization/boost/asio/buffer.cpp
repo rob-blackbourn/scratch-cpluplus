@@ -35,7 +35,7 @@ std::vector<char>::iterator &operator<<(
     return iter;
 }
 
-size_t serialize_size(const boost::asio::mutable_buffer &value)
+size_t serialize_size(const boost::asio::mutable_buffer &value) noexcept
 {
     return sizeof(size_t) + value.size();
 }
@@ -72,7 +72,7 @@ std::vector<char>::iterator &operator<<(
     return iter;
 }
 
-size_t serialize_size(const boost::asio::const_buffer &value)
+size_t serialize_size(const boost::asio::const_buffer &value) noexcept
 {
 
     return sizeof(size_t) + value.size();

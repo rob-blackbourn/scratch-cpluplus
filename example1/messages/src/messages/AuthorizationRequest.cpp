@@ -10,7 +10,7 @@
 
 using jetblack::messagebus::messages::AuthorizationRequest;
 
-size_t AuthorizationRequest::bodySize() const
+size_t AuthorizationRequest::bodySize() const noexcept
 {
     return serialize_size(_clientId) +
            serialize_size(_address) +

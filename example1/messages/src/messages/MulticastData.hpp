@@ -14,25 +14,33 @@ namespace jetblack::messagebus::messages
   class MulticastData : public Message
   {
     public:
-      MulticastData()
-          : Message(MessageType::MulticastData)
+      MulticastData() noexcept
+        : Message(MessageType::MulticastData)
       {
       }
 
-      MulticastData(const std::string &feed, const std::string &topic, bool isImage, std::vector<BinaryDataPacket> &&data)
-          : Message(MessageType::MulticastData), _feed(feed), _topic(topic), _isImage(isImage), _data(std::move(data))
+      MulticastData(
+        const std::string &feed,
+        const std::string &topic,
+        bool isImage,
+        std::vector<BinaryDataPacket> &&data) noexcept
+          : Message(MessageType::MulticastData),
+            _feed(feed),
+            _topic(topic),
+            _isImage(isImage),
+            _data(data)
       {
       }
 
-      const std::string &feed() const { return _feed; }
-      const std::string &topic() const { return _topic; }
-      const bool isImage() const { return _isImage; }
-      const std::vector<BinaryDataPacket> &data() const { return _data; }
+      const std::string &feed() const noexcept { return _feed; }
+      const std::string &topic() const noexcept { return _topic; }
+      const bool isImage() const noexcept { return _isImage; }
+      const std::vector<BinaryDataPacket> &data() const noexcept { return _data; }
 
       static std::shared_ptr<MulticastData> from_bytes(std::vector<char>::const_iterator &iter);
 
     protected:
-      virtual size_t bodySize() const;
+      virtual size_t bodySize() const noexcept;
       virtual void writeBody(std::vector<char>::iterator &sink) const;
 
     private:

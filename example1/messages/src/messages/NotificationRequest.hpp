@@ -13,24 +13,27 @@ namespace jetblack::messagebus::messages
     class NotificationRequest : public Message
     {
     public:
-        NotificationRequest()
+        NotificationRequest() noexcept
             : Message(MessageType::NotificationRequest)
         {
         }
 
-        NotificationRequest(const std::string &feed, bool isAdd)
-            : Message(MessageType::NotificationRequest),
-            _feed(feed), _isAdd(isAdd)
+        NotificationRequest(
+            const std::string &feed,
+            bool isAdd) noexcept
+            :   Message(MessageType::NotificationRequest),
+                _feed(feed),
+                _isAdd(isAdd)
         {
         }
 
-        const std::string &feed() const { return _feed; }
-        bool isAdd() const { return _isAdd; }
+        const std::string &feed() const noexcept { return _feed; }
+        bool isAdd() const noexcept { return _isAdd; }
 
         static std::shared_ptr<NotificationRequest> from_bytes(std::vector<char>::const_iterator &iter);
 
     protected:
-        virtual size_t bodySize() const;
+        virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator &sink) const;
 
     private:
