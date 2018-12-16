@@ -25,12 +25,12 @@ namespace jetblack::messagebus::messages
         {
         }
 
-        BinaryDataPacket(const BinaryDataPacket& other)
+        BinaryDataPacket(const BinaryDataPacket& other) noexcept
             : _header(other._header), _body(other._body)
         {
         }
 
-        BinaryDataPacket& operator =(const BinaryDataPacket& other)
+        BinaryDataPacket& operator =(const BinaryDataPacket& other) noexcept
         {
             if (this == &other) return *this;
 
