@@ -53,6 +53,17 @@ inline std::vector<char>::iterator &operator<<(
     return iter;
 }
 
+template <>
+inline std::vector<char>::iterator &operator<<(
+    std::vector<char>::iterator &iter,
+    const std::vector<char> &value)
+{
+    iter << value.size();
+    std::copy(value.begin(), value.end(), iter);
+    iter += value.size();
+    return iter;
+}
+
 template <typename T>
 inline size_t serialize_size(std::vector<T> const &value) noexcept
 {
