@@ -11,22 +11,6 @@
 
 std::vector<char>::const_iterator &operator>>(
     std::vector<char>::const_iterator &iter,
-    boost::asio::ip::address_v4 &value);
-
-std::vector<char>::iterator &operator<<(
-    std::vector<char>::iterator &iter,
-    const boost::asio::ip::address_v4 &value);
-
-std::vector<char>::const_iterator &operator>>(
-    std::vector<char>::const_iterator &iter,
-    boost::asio::ip::address_v6 &value);
-
-std::vector<char>::iterator &operator<<(
-    std::vector<char>::iterator &iter,
-    const boost::asio::ip::address_v6 &value);
-
-std::vector<char>::const_iterator &operator>>(
-    std::vector<char>::const_iterator &iter,
     boost::asio::ip::address &value);
 
 std::vector<char>::iterator &operator<<(
