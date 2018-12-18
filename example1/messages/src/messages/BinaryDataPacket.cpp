@@ -51,3 +51,16 @@ bool operator == (const BinaryDataPacket& lhs, const BinaryDataPacket& rhs) noex
     return lhs.header() == rhs.header() &&
         lhs.body() == rhs.body();
 }
+bool operator == (
+    const std::vector<jetblack::messagebus::messages::BinaryDataPacket>& lhs,
+    const std::vector<jetblack::messagebus::messages::BinaryDataPacket>& rhs) noexcept
+{
+    if (lhs.size() != rhs.size()) return false;
+
+    for (auto liter = lhs.begin(), riter = rhs.begin(); liter != lhs.end(); ++liter, ++riter)
+    {
+        if (!(*liter == *riter))
+        return false;
+    }
+    return true;
+}

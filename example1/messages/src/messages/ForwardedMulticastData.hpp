@@ -30,6 +30,7 @@ namespace jetblack::messagebus::messages
             std::vector<BinaryDataPacket> &&data) noexcept
             : Message(MessageType::ForwardedMulticastData),
               _user(user),
+              _address(address),
               _feed(feed),
               _topic(topic),
               _isImage(isImage),
@@ -61,5 +62,9 @@ namespace jetblack::messagebus::messages
 }
 
 std::ostream &operator<<(std::ostream &os, const jetblack::messagebus::messages::ForwardedMulticastData &value);
+
+bool operator==(
+    const jetblack::messagebus::messages::ForwardedMulticastData &lhs,
+    const jetblack::messagebus::messages::ForwardedMulticastData &rhs) noexcept;
 
 #endif // __messages_ForwardedMulticastData_hpp

@@ -21,8 +21,7 @@ bool ShouldRoundTripSimple()
     auto generator = boost::uuids::random_generator();
     boost::uuids::uuid header(generator());
     std::vector<char> body{'a', 'b', 'c'};
-
-    jetblack::messagebus::messages::BinaryDataPacket value{header, std::move(body)};
+    BinaryDataPacket value{header, std::move(body)};
     return test_serialize(value);
 }
 

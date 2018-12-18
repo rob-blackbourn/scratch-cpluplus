@@ -64,4 +64,8 @@ bool operator == (
     const jetblack::messagebus::messages::BinaryDataPacket& lhs,
     const jetblack::messagebus::messages::BinaryDataPacket& rhs) noexcept;
 
+bool operator == (
+    const std::vector<jetblack::messagebus::messages::BinaryDataPacket>& lhs,
+    const std::vector<jetblack::messagebus::messages::BinaryDataPacket>& rhs) noexcept;
+
 #endif // __messages_BinaryDataPacket_hpp
