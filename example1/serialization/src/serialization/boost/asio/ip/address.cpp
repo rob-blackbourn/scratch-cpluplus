@@ -1,37 +1,21 @@
 #include "address.hpp"
 
-#include "serialization/native.hpp"
-#include "serialization/array.hpp"
-#include "serialization/vector.hpp"
+#include "serialization/string.hpp"
+
+#include <string>
+
+size_t serialize_size(const boost::asio::ip::address &value) noexcept
+{
+    return serialize_size(value.to_string());
+}
 
 std::vector<char>::const_iterator &operator>>(
     std::vector<char>::const_iterator &iter,
     boost::asio::ip::address &value)
 {
-    std::vector<char> bytes;
-    iter >> bytes;
-
-    if (bytes.size() == std::tuple_size<boost::asio::ip::address_v4::bytes_type>())
-    {
-        boost::asio::ip::address_v4::bytes_type bytes_v4;
-        std::copy(bytes.begin(), bytes.end(), bytes_v4.begin());
-        boost::asio::ip::address_v4 addr_v4(bytes_v4);
-        boost::asio::ip::address addr(addr_v4);
-        value = addr;
-    }
-    else if (bytes.size() == std::tuple_size<boost::asio::ip::address_v6::bytes_type>())
-    {
-        boost::asio::ip::address_v6::bytes_type bytes_v6;
-        std::copy(bytes.begin(), bytes.end(), bytes_v6.begin());
-        boost::asio::ip::address_v6 addr_v6(bytes_v6);
-        boost::asio::ip::address addr(addr_v6);
-        value = addr;
-    }
-    else
-    {
-        throw std::domain_error("Unknown address type");
-    }
-
+    std::string s;
+    iter >> s;
+    value = boost::asio::ip::make_address(s);
     return iter;
 }
 
@@ -39,25 +23,6 @@ std::vector<char>::iterator &operator<<(
     std::vector<char>::iterator &iter,
     const boost::asio::ip::address &value)
 {
-    if (value.is_v4())
-    {
-        auto bytes{value.to_v4().to_bytes()};
-        std::vector<char> buf(bytes.size());
-        std::copy(bytes.begin(), bytes.end(), buf.begin());
-        iter << buf;
-    }
-    else
-    {
-        auto bytes{value.to_v6().to_bytes()};
-        std::vector<char> buf(bytes.size());
-        std::copy(bytes.begin(), bytes.end(), buf.begin());
-        iter << buf;
-    }
-
+    iter << value.to_string();
     return iter;
-}
-
-size_t serialize_size(const boost::asio::ip::address &value) noexcept
-{
-    return sizeof(size_t) + (value.is_v4() ? value.to_v4().to_bytes().size() : sizeof(size_t) + value.to_v6().to_bytes().size());
 }
