@@ -30,45 +30,45 @@ MessageType Message::readHeader(std::vector<char>::const_iterator& iter)
     return static_cast<MessageType>(byte);
 }
 
-std::vector<char>::iterator& Message::writeHeader(std::vector<char>::iterator& sink) const
+std::vector<char>::iterator& Message::writeHeader(std::vector<char>::iterator& iter) const
 {
     unsigned char byte = static_cast<unsigned char>(type());
-    sink << byte;
-    return sink;
+    iter << byte;
+    return iter;
 }
 
-std::shared_ptr<Message> Message::from_bytes(std::vector<char>::const_iterator& source)
+std::shared_ptr<Message> Message::from_bytes(std::vector<char>::const_iterator& iter)
 {
-    MessageType type = readHeader(source);
+    MessageType type = readHeader(iter);
 
-        switch (type)
+    switch (type)
     {
         case MessageType::AuthorizationRequest:
-            return AuthorizationRequest::from_bytes(source);
+            return AuthorizationRequest::from_bytes(iter);
 
         case MessageType::AuthorizationResponse:
-            return AuthorizationResponse::from_bytes(source);
+            return AuthorizationResponse::from_bytes(iter);
 
         case MessageType::ForwardedMulticastData:
-            return ForwardedMulticastData::from_bytes(source);
+            return ForwardedMulticastData::from_bytes(iter);
 
         case MessageType::ForwardedSubscriptionRequest:
-            return ForwardedSubscriptionRequest::from_bytes(source);
+            return ForwardedSubscriptionRequest::from_bytes(iter);
 
         case MessageType::InteractorAdvertisement:
-            return InteractorAdvertisement::from_bytes(source);
+            return InteractorAdvertisement::from_bytes(iter);
 
         case MessageType::MulticastData:
-            return MulticastData::from_bytes(source);
+            return MulticastData::from_bytes(iter);
 
         case MessageType::NotificationRequest:
-            return NotificationRequest::from_bytes(source);
+            return NotificationRequest::from_bytes(iter);
 
         case MessageType::SubscriptionRequest:
-            return SubscriptionRequest::from_bytes(source);
+            return SubscriptionRequest::from_bytes(iter);
 
         case MessageType::UnicastData:
-            return UnicastData::from_bytes(source);
+            return UnicastData::from_bytes(iter);
 
         default:
             throw "oh dear";
@@ -78,8 +78,8 @@ std::shared_ptr<Message> Message::from_bytes(std::vector<char>::const_iterator& 
 
 std::shared_ptr<std::vector<char>> Message::to_bytes() const
 {
-    size_t size = headerSize() + bodySize();
-    std::shared_ptr<std::vector<char>> sink = std::make_shared<std::vector<char>>(size);
+    size_t len = headerSize() + bodySize();
+    std::shared_ptr<std::vector<char>> sink = std::make_shared<std::vector<char>>(std::vector<char>(len));
 
     auto iter = sink->begin();
 

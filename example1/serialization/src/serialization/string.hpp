@@ -14,8 +14,8 @@ inline std::vector<char>::const_iterator &operator>>(
     iter >> len;
     auto begin = iter;
     iter += len;
-    value.reserve(len);
-    value.assign(begin, iter);
+    value.resize(len);
+    std::copy(begin, iter, value.begin());
     return iter;
 }
 
@@ -24,7 +24,7 @@ inline std::vector<char>::iterator &operator<<(
     const std::string &value)
 {
     iter << value.size();
-    std::copy(value.data(), value.data() + value.size(), iter);
+    std::copy(value.begin(), value.end(), iter);
     iter += value.size();
     return iter;
 }

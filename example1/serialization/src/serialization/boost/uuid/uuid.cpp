@@ -11,17 +11,17 @@
 
 size_t serialize_size(const boost::uuids::uuid &value) noexcept
 {
-    return value.size();
+    size_t len =  value.size();
+    return len;
 }
 
 std::vector<char>::const_iterator &operator>>(
     std::vector<char>::const_iterator &iter,
     boost::uuids::uuid &value)
 {
-    std::array<uint8_t, sizeof(value.data)> bytes;
-    iter >> bytes;
-    std::copy(bytes.begin(), bytes.end(), value.data);
-
+    auto start = iter;
+    iter += value.size();
+    std::copy(start, iter, value.begin());
     return iter;
 }
 
@@ -29,8 +29,7 @@ std::vector<char>::iterator &operator<<(
     std::vector<char>::iterator &iter,
     const boost::uuids::uuid &value)
 {
-    size_t len = sizeof(value.data);
-    std::copy(value.data, value.data + len, iter);
-    iter += len;
+    std::copy(value.begin(), value.end(), iter);
+    iter += value.size();
     return iter;
 }

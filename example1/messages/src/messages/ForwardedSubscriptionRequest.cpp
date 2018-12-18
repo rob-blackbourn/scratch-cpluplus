@@ -10,29 +10,32 @@ using jetblack::messagebus::messages::ForwardedSubscriptionRequest;
 
 size_t ForwardedSubscriptionRequest::bodySize() const noexcept
 {
-    return serialize_size(_user) +
-           serialize_size(_address) +
-           serialize_size(_feed) +
-           serialize_size(_topic) +
-           serialize_size(_isAdd);
+    size_t len = 0;
+    len += serialize_size(_clientId);
+    len += serialize_size(_user);
+    len += serialize_size(_address);
+    len += serialize_size(_feed);
+    len += serialize_size(_topic);
+    len += serialize_size(_isAdd);
+    return len;
 }
 
 std::shared_ptr<ForwardedSubscriptionRequest> ForwardedSubscriptionRequest::from_bytes(std::vector<char>::const_iterator &iter)
 {
-    std::string user;
-    iter >> user;
-
-    boost::asio::ip::address address;
-    iter >> address;
-
     boost::uuids::uuid clientId;
     iter >> clientId;
+
+    std::string user;
+    iter >> user;
 
     std::string feed;
     iter >> feed;
 
     std::string topic;
     iter >> topic;
+
+    boost::asio::ip::address address;
+    iter >> address;
 
     bool isAdd;
     iter >> isAdd;
@@ -42,11 +45,11 @@ std::shared_ptr<ForwardedSubscriptionRequest> ForwardedSubscriptionRequest::from
 
 void ForwardedSubscriptionRequest::writeBody(std::vector<char>::iterator &iter) const
 {
-    iter << _user;
-    iter << _address;
     iter << _clientId;
+    iter << _user;
     iter << _feed;
     iter << _topic;
+    iter << _address;
     iter << _isAdd;
 }
 
