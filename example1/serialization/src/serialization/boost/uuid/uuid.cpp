@@ -11,8 +11,7 @@
 
 size_t serialize_size(const boost::uuids::uuid &value) noexcept
 {
-    size_t len =  value.size();
-    return len;
+    return value.size();
 }
 
 std::vector<char>::const_iterator &operator>>(
