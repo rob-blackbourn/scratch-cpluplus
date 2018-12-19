@@ -44,6 +44,24 @@ namespace jetblack::messagebus::messages
 
         static std::shared_ptr<UnicastData> from_bytes(std::vector<char>::const_iterator& iter);
 
+        friend bool operator == (UnicastData& lhs, const UnicastData& rhs) noexcept
+        {
+            return lhs._clientId == rhs._clientId &&
+                lhs._feed == rhs._feed &&
+                lhs._topic == rhs._topic &&
+                lhs._isImage == rhs._isImage &&
+                lhs._data == rhs._data;
+        }
+
+        friend bool operator != (UnicastData& lhs, const UnicastData& rhs) noexcept
+        {
+            return lhs._clientId != rhs._clientId ||
+                lhs._feed != rhs._feed ||
+                lhs._topic != rhs._topic ||
+                lhs._isImage != rhs._isImage ||
+                !(lhs._data == rhs._data);
+        }
+        
     protected:
         virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator& sink) const;

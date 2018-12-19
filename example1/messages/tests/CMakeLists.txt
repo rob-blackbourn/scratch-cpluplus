@@ -59,3 +59,10 @@ target_link_libraries(TestSubscriptionRequest PRIVATE messages)
 target_link_libraries(TestSubscriptionRequest PRIVATE boost_system)
 
 add_test(TestSubscriptionRequest TestInteractorAdvertisement)
+
+add_executable(TestUnicastData test_UnicastData.cpp)
+target_link_libraries(TestUnicastData PRIVATE serialization)
+target_link_libraries(TestUnicastData PRIVATE messages)
+target_link_libraries(TestUnicastData PRIVATE boost_system)
+
+add_test(TestUnicastData TestInteractorAdvertisement)
