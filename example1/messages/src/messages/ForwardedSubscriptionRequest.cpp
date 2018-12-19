@@ -63,15 +63,3 @@ std::ostream &operator<<(std::ostream &os, const ForwardedSubscriptionRequest &v
            << ",topic=\"" << value.topic() << "\""
            << ",isAdd=" << value.isAdd();
 }
-
-bool operator==(
-    const jetblack::messagebus::messages::ForwardedSubscriptionRequest &lhs,
-    const jetblack::messagebus::messages::ForwardedSubscriptionRequest &rhs) noexcept
-{
-    return lhs.user() == rhs.user() &&
-        lhs.address() == rhs.address() &&
-        lhs.clientId() == rhs.clientId() &&
-        lhs.feed() == rhs.feed() &&
-        lhs.topic() == rhs.topic() &&
-        lhs.isAdd() == rhs.isAdd();    
-}

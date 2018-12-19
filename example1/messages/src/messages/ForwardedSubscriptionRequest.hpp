@@ -47,6 +47,22 @@ namespace jetblack::messagebus::messages
 
         static std::shared_ptr<ForwardedSubscriptionRequest> from_bytes(std::vector<char>::const_iterator &iter);
 
+
+        friend bool operator == (const ForwardedSubscriptionRequest &lhs, const ForwardedSubscriptionRequest &rhs) noexcept
+        {
+            return lhs.user() == rhs.user() &&
+                lhs.address() == rhs.address() &&
+                lhs.clientId() == rhs.clientId() &&
+                lhs.feed() == rhs.feed() &&
+                lhs.topic() == rhs.topic() &&
+                lhs.isAdd() == rhs.isAdd();   
+        }
+
+        friend bool operator != (const ForwardedSubscriptionRequest &lhs, const ForwardedSubscriptionRequest &rhs) noexcept
+        {
+            return !(lhs == rhs);
+        }
+
     protected:
         virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator &sink) const;
@@ -62,9 +78,5 @@ namespace jetblack::messagebus::messages
 }
 
 std::ostream &operator<<(std::ostream &os, const jetblack::messagebus::messages::ForwardedSubscriptionRequest &value);
-
-bool operator==(
-    const jetblack::messagebus::messages::ForwardedSubscriptionRequest &lhs,
-    const jetblack::messagebus::messages::ForwardedSubscriptionRequest &rhs) noexcept;
 
 #endif // __messages_ForwardedSubscriptionRequest_hpp

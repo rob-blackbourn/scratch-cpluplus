@@ -47,6 +47,21 @@ namespace jetblack::messagebus::messages
 
         static std::shared_ptr<ForwardedMulticastData> from_bytes(std::vector<char>::const_iterator &iter);
 
+        friend bool operator== (const ForwardedMulticastData &lhs, const ForwardedMulticastData &rhs) noexcept
+        {
+                return lhs.user() == rhs.user() &&
+                    lhs.address() == rhs.address() &&
+                    lhs.feed() == rhs.feed() &&
+                    lhs.topic() == rhs.topic() &&
+                    lhs.isImage() == rhs.isImage() &&
+                    lhs.data() == rhs.data();
+        }
+
+        friend bool operator != (const ForwardedMulticastData &lhs, const ForwardedMulticastData &rhs) noexcept
+        {
+            return !(lhs == rhs);
+        }
+
     protected:
         virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator &sink) const;
@@ -62,9 +77,5 @@ namespace jetblack::messagebus::messages
 }
 
 std::ostream &operator<<(std::ostream &os, const jetblack::messagebus::messages::ForwardedMulticastData &value);
-
-bool operator==(
-    const jetblack::messagebus::messages::ForwardedMulticastData &lhs,
-    const jetblack::messagebus::messages::ForwardedMulticastData &rhs) noexcept;
 
 #endif // __messages_ForwardedMulticastData_hpp

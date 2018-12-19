@@ -62,15 +62,3 @@ std::ostream& operator << (std::ostream& os, const ForwardedMulticastData& value
         << ",isImage=" << value.isImage() 
         << ",data.size()=" << value.data().size();
 }
-
-bool operator==(
-    const jetblack::messagebus::messages::ForwardedMulticastData &lhs,
-    const jetblack::messagebus::messages::ForwardedMulticastData &rhs) noexcept
-{
-    return lhs.user() == rhs.user() &&
-        lhs.address() == rhs.address() &&
-        lhs.feed() == rhs.feed() &&
-        lhs.topic() == rhs.topic() &&
-        lhs.isImage() == rhs.isImage() &&
-        lhs.data() == rhs.data();
-}

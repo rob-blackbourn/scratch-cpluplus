@@ -45,7 +45,7 @@ namespace jetblack::messagebus::messages
 
         static std::shared_ptr<AuthorizationRequest> from_bytes(std::vector<char>::const_iterator& iter);
 
-        friend bool operator == (const AuthorizationRequest& lhs, const AuthorizationRequest& rhs)
+        friend bool operator == (const AuthorizationRequest& lhs, const AuthorizationRequest& rhs) noexcept
         {
             return lhs._clientId == rhs._clientId &&
                 lhs._address == rhs._address &&
@@ -54,7 +54,7 @@ namespace jetblack::messagebus::messages
                 lhs._topic == rhs._topic;
         }
 
-        friend bool operator != (const AuthorizationRequest& lhs, const AuthorizationRequest& rhs)
+        friend bool operator != (const AuthorizationRequest& lhs, const AuthorizationRequest& rhs) noexcept
         {
             return !(lhs == rhs);
         }
