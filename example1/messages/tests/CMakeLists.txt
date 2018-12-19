@@ -25,3 +25,10 @@ target_link_libraries(TestAuthorizationRequest PRIVATE serialization)
 target_link_libraries(TestAuthorizationRequest PRIVATE messages)
 
 add_test(TestAuthorizationRequest TestAuthorizationRequest)
+
+add_executable(TestAuthorizationResponse test_AuthorizationResponse.cpp)
+target_link_libraries(TestAuthorizationResponse PRIVATE serialization)
+target_link_libraries(TestAuthorizationResponse PRIVATE messages)
+target_link_libraries(TestAuthorizationResponse PRIVATE boost_system)
+
+add_test(TestAuthorizationResponse TestAuthorizationRequest)

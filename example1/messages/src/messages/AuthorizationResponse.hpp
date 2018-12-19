@@ -43,6 +43,20 @@ namespace jetblack::messagebus::messages
 
         static std::shared_ptr<AuthorizationResponse> from_bytes(std::vector<char>::const_iterator &iter);
 
+        friend bool operator == (const AuthorizationResponse& lhs, const AuthorizationResponse& rhs)
+        {
+            return lhs._clientId == rhs._clientId &&
+                lhs._feed == rhs._feed &&
+                lhs._topic == rhs._topic &&
+                lhs._isAuthorizationRequired == rhs._isAuthorizationRequired &&
+                lhs._entitlements == rhs._entitlements;
+        }
+
+        friend bool operator != (const AuthorizationResponse& lhs, const AuthorizationResponse& rhs)
+        {
+            return !(lhs == rhs);
+        }
+
     protected:
         virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator &sink) const;
