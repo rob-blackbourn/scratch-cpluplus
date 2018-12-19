@@ -52,3 +52,10 @@ target_link_libraries(TestNotificationRequest PRIVATE messages)
 target_link_libraries(TestNotificationRequest PRIVATE boost_system)
 
 add_test(TestNotificationRequest TestInteractorAdvertisement)
+
+add_executable(TestSubscriptionRequest test_SubscriptionRequest.cpp)
+target_link_libraries(TestSubscriptionRequest PRIVATE serialization)
+target_link_libraries(TestSubscriptionRequest PRIVATE messages)
+target_link_libraries(TestSubscriptionRequest PRIVATE boost_system)
+
+add_test(TestSubscriptionRequest TestInteractorAdvertisement)

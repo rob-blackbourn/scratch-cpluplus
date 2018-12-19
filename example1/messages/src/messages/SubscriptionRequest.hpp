@@ -35,6 +35,20 @@ namespace jetblack::messagebus::messages
 
         static std::shared_ptr<SubscriptionRequest> from_bytes(std::vector<char>::const_iterator &iter);
 
+        friend bool operator == (const SubscriptionRequest& lhs, const SubscriptionRequest& rhs) noexcept
+        {
+            return lhs._feed == rhs._feed &&
+                lhs._topic == rhs._topic &&
+                lhs._isAdd == rhs._isAdd;
+        }
+
+        friend bool operator != (const SubscriptionRequest& lhs, const SubscriptionRequest& rhs) noexcept
+        {
+            return lhs._feed != rhs._feed ||
+                lhs._topic != rhs._topic ||
+                lhs._isAdd != rhs._isAdd;
+        }
+
     protected:
         virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator &sink) const;
