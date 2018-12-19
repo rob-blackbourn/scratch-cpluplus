@@ -1,14 +1,9 @@
-#include <iostream>
 #include <vector>
 #include <string>
-#include <array>
 
 #include <boost/asio/ip/address.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
-
-#include "serialization/native.hpp"
-#include "serialization/string.hpp"
 
 #include "messages/ForwardedMulticastData.hpp"
 #include "messages/BinaryDataPacket.hpp"

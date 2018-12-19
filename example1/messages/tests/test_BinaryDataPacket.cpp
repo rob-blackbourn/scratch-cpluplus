@@ -4,14 +4,11 @@
 #include <array>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/asio/buffer.hpp>
 
-#include "serialization/native.hpp"
-#include "serialization/string.hpp"
 #include "serialization/boost/uuid/uuid.hpp"
 
 #include "messages/BinaryDataPacket.hpp"
+
 #include "test_serialize.hpp"
 
 using jetblack::messagebus::messages::BinaryDataPacket;

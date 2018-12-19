@@ -1,16 +1,8 @@
-#include <iostream>
 #include <vector>
 #include <string>
-#include <array>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
-#include <boost/uuid/uuid_io.hpp>
-#include <boost/asio/buffer.hpp>
 #include <boost/asio/ip/address.hpp>
-
-#include "serialization/native.hpp"
-#include "serialization/string.hpp"
-#include "serialization/boost/uuid/uuid.hpp"
 
 #include "messages/AuthorizationRequest.hpp"
 
