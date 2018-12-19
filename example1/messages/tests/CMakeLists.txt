@@ -45,3 +45,10 @@ target_link_libraries(TestMulticastData PRIVATE messages)
 target_link_libraries(TestMulticastData PRIVATE boost_system)
 
 add_test(TestMulticastData TestInteractorAdvertisement)
+
+add_executable(TestNotificationRequest test_NotificationRequest.cpp)
+target_link_libraries(TestNotificationRequest PRIVATE serialization)
+target_link_libraries(TestNotificationRequest PRIVATE messages)
+target_link_libraries(TestNotificationRequest PRIVATE boost_system)
+
+add_test(TestNotificationRequest TestInteractorAdvertisement)
