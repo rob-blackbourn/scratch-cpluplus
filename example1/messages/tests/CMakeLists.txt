@@ -38,3 +38,10 @@ target_link_libraries(TestInteractorAdvertisement PRIVATE serialization)
 target_link_libraries(TestInteractorAdvertisement PRIVATE messages)
 
 add_test(TestInteractorAdvertisement TestInteractorAdvertisement)
+
+add_executable(TestMulticastData test_MulticastData.cpp)
+target_link_libraries(TestMulticastData PRIVATE serialization)
+target_link_libraries(TestMulticastData PRIVATE messages)
+target_link_libraries(TestMulticastData PRIVATE boost_system)
+
+add_test(TestMulticastData TestInteractorAdvertisement)
