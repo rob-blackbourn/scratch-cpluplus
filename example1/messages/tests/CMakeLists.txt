@@ -19,3 +19,9 @@ target_link_libraries(TestForwardedMulticastData PRIVATE serialization)
 target_link_libraries(TestForwardedMulticastData PRIVATE messages)
 
 add_test(TestForwardedMulticastData TestForwardedMulticastData)
+
+add_executable(TestAuthorizationRequest test_AuthorizationRequest.cpp)
+target_link_libraries(TestAuthorizationRequest PRIVATE serialization)
+target_link_libraries(TestAuthorizationRequest PRIVATE messages)
+
+add_test(TestAuthorizationRequest TestAuthorizationRequest)

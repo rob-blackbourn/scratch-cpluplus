@@ -45,6 +45,20 @@ namespace jetblack::messagebus::messages
 
         static std::shared_ptr<AuthorizationRequest> from_bytes(std::vector<char>::const_iterator& iter);
 
+        friend bool operator == (const AuthorizationRequest& lhs, const AuthorizationRequest& rhs)
+        {
+            return lhs._clientId == rhs._clientId &&
+                lhs._address == rhs._address &&
+                lhs._user == rhs._user &&
+                lhs._feed == rhs._feed &&
+                lhs._topic == rhs._topic;
+        }
+
+        friend bool operator != (const AuthorizationRequest& lhs, const AuthorizationRequest& rhs)
+        {
+            return !(lhs == rhs);
+        }
+
     protected:
         virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator& sink) const;
@@ -59,5 +73,6 @@ namespace jetblack::messagebus::messages
 }
 
 std::ostream& operator << (std::ostream& os, const jetblack::messagebus::messages::AuthorizationRequest& value);
+
 
 #endif // __messages_AuthorizationRequest_hpp
