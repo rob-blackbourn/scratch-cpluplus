@@ -37,6 +37,18 @@ namespace jetblack::messagebus::messages
         
         static std::shared_ptr<InteractorAdvertisement> from_bytes(std::vector<char>::const_iterator& iter);
 
+        friend bool operator == (const InteractorAdvertisement& lhs, const InteractorAdvertisement& rhs)
+        {
+            return lhs._user == rhs._user &&
+                lhs._address == rhs._address &&
+                lhs._isJoining == rhs._isJoining;
+        }
+
+        friend bool operator != (const InteractorAdvertisement& lhs, const InteractorAdvertisement& rhs)
+        {
+            return !(lhs == rhs);
+        }
+        
     protected:
         virtual size_t bodySize() const noexcept;
         virtual void writeBody(std::vector<char>::iterator& sink) const;

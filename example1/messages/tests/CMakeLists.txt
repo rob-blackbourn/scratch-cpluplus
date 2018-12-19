@@ -32,3 +32,9 @@ target_link_libraries(TestAuthorizationResponse PRIVATE messages)
 target_link_libraries(TestAuthorizationResponse PRIVATE boost_system)
 
 add_test(TestAuthorizationResponse TestAuthorizationRequest)
+
+add_executable(TestInteractorAdvertisement test_InteractorAdvertisement.cpp)
+target_link_libraries(TestInteractorAdvertisement PRIVATE serialization)
+target_link_libraries(TestInteractorAdvertisement PRIVATE messages)
+
+add_test(TestInteractorAdvertisement TestInteractorAdvertisement)
